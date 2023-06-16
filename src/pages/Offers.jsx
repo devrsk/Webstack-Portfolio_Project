@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import {
   collection,
@@ -22,6 +21,8 @@ function Offers() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
+        console.log("Fetching listings...");
+
         // Get reference
         const listingsRef = collection(db, "listings");
 
@@ -33,7 +34,7 @@ function Offers() {
           limit(1)
         );
 
-        // Execte query
+        // Execute query
         const querySnap = await getDocs(q);
 
         const lastVisible = querySnap.docs[querySnap.docs.length - 1];
@@ -48,9 +49,11 @@ function Offers() {
           });
         });
 
+        console.log("Listings fetched:", listings);
         setListings(listings);
         setLoading(false);
       } catch (error) {
+        console.error("Error fetching listings:", error);
         toast.error("Could not fetch listings");
       }
     };
@@ -61,6 +64,8 @@ function Offers() {
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     try {
+      console.log("Fetching more listings...");
+
       // Get reference
       const listingsRef = collection(db, "listings");
 
@@ -73,7 +78,7 @@ function Offers() {
         limit(10)
       );
 
-      // Execte query
+      // Execute query
       const querySnap = await getDocs(q);
 
       const lastVisible = querySnap.docs[querySnap.docs.length - 1];
@@ -88,9 +93,11 @@ function Offers() {
         });
       });
 
+      console.log("More listings fetched:", listings);
       setListings((prevState) => [...prevState, ...listings]);
       setLoading(false);
     } catch (error) {
+      console.error("Error fetching more listings:", error);
       toast.error("Could not fetch listings");
     }
   };

@@ -37,6 +37,8 @@ function Profile() {
   useEffect(() => {
     const fetchUserListings = async () => {
       try {
+        console.log("Fetching user listings...");
+
         const listingsRef = collection(db, "listings");
 
         const q = query(
@@ -58,7 +60,9 @@ function Profile() {
 
         setListings(listings);
         setLoading(false);
+        console.log("User listings fetched successfully:", listings);
       } catch (error) {
+        console.error("Error fetching user listings:", error);
         toast.error("Could not fetch data!");
       }
     };
@@ -84,8 +88,10 @@ function Profile() {
         await updateDoc(userRef, {
           name: name,
         });
+        console.log("Profile details updated successfully");
       }
     } catch (error) {
+      console.error("Error updating profile details:", error);
       toast.error("Could not update profile details");
     }
   };
@@ -99,16 +105,24 @@ function Profile() {
 
   const onDelete = async (listingId) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      await deleteDoc(doc(db, "listings", listingId));
-      const updatedListings = listings.filter(
-        (listing) => listing.id !== listingId
-      );
-      setListings(updatedListings);
-      toast.success("Listing Deleted!");
+      try {
+        await deleteDoc(doc(db, "listings", listingId));
+        const updatedListings = listings.filter(
+          (listing) => listing.id !== listingId
+        );
+        setListings(updatedListings);
+        toast.success("Listing Deleted!");
+        console.log("Listing deleted successfully");
+      } catch (error) {
+        console.error("Error deleting listing:", error);
+        toast.error("Could not delete listing");
+      }
     }
   };
 
   const onEdit = (listingId) => navigate(`/edit-listing/${listingId}`);
+
+  console.log("Rendering Profile component...");
 
   return (
     <div className="profile">

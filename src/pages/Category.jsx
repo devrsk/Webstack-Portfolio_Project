@@ -24,6 +24,8 @@ function Category() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
+        console.log("Fetching initial listings...");
+
         // Get reference
         const listingsRef = collection(db, "listings");
 
@@ -35,7 +37,7 @@ function Category() {
           limit(3)
         );
 
-        // Execte query
+        // Execute query
         const querySnap = await getDocs(q);
 
         const lastVisible = querySnap.docs[querySnap.docs.length - 1];
@@ -63,6 +65,8 @@ function Category() {
   // Pagination / Load More
   const onFetchMoreListings = async () => {
     try {
+      console.log("Fetching more listings...");
+
       // Get reference
       const listingsRef = collection(db, "listings");
 
@@ -75,7 +79,7 @@ function Category() {
         limit(10)
       );
 
-      // Execte query
+      // Execute query
       const querySnap = await getDocs(q);
 
       const lastVisible = querySnap.docs[querySnap.docs.length - 1];
@@ -96,6 +100,8 @@ function Category() {
       toast.error("Could not fetch listings");
     }
   };
+
+  console.log("Listings:", listings);
 
   return (
     <div className="category">

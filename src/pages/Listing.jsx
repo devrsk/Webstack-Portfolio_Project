@@ -27,6 +27,8 @@ function Listing() {
 
   useEffect(() => {
     const fetchListing = async () => {
+      console.log("Fetching listing...");
+
       const docRef = doc(db, "listings", params.listingId);
       const docSnap = await getDoc(docRef);
 
@@ -42,6 +44,8 @@ function Listing() {
   if (loading) {
     return <Spinner />;
   }
+
+  console.log("Listing:", listing);
 
   return (
     <main>

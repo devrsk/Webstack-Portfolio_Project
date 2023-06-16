@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "propertypro",
     "public": "public",
     "ignore": [
       "firebase.json",

@@ -18,8 +18,9 @@ function SignUp() {
     name: "",
     email: "",
     password: "",
+    phoneNumber: "",
   });
-  const { name, email, password } = formData;
+  const { name, email, password, phoneNumber } = formData;
 
   const navigate = useNavigate();
 
@@ -50,6 +51,7 @@ function SignUp() {
       const formDataCopy = { ...formData };
       delete formDataCopy.password;
       formDataCopy.timestamp = serverTimestamp();
+      formDataCopy.uid = user.uid; // Add UID to the formDataCopy
 
       await setDoc(doc(db, "users", user.uid), formDataCopy);
 
@@ -82,6 +84,14 @@ function SignUp() {
               placeholder="Email"
               id="email"
               value={email}
+              onChange={onChange}
+            />
+            <input
+              type="text"
+              className="phoneNumberInput"
+              placeholder="Phone Number"
+              id="phoneNumber"
+              value={phoneNumber}
               onChange={onChange}
             />
             <div className="passwordInputDiv">

@@ -5,6 +5,7 @@ import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRig
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
+import "./Profile.css";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);

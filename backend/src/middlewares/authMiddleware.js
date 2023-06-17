@@ -1,27 +1,42 @@
-const jwt = require('jsonwebtoken'); // import the jwt module
-const { JWT } = require('../constants'); // import the jwt secret
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
-// export the middleware function
-module.exports = async (req, res, next) => { // this is the middleware function that will be used in the routes to protect the routes
-    try {
-        const jwtToken = req.header("token"); // get the token from the header
+// Load environment variables
+dotenv.config();
 
-        if (!jwtToken) {
-            return res.status(403).json({
-                success: false,
-                message: "Not authorized"
-            })
-        }
+const authMiddleware = (req, res, next) => {
+  try {
+    console.log('Authenticating user...');
+    const token = req.header('Authorization').split(' ')[1];
 
-        const payload = jwt.verify(jwtToken, JWT.JWT_SECRET); // verify the token
-
-        req.user = payload.user; // set the user in the request object
-
-    } catch (error) {
-        return res.status(403).json({
-            success: false,
-            message: "Not authorized"
-        })
+    if (!token) {
+      console.log('Access denied (no token)');
+      return res.status(401).json({
+        success: false,
+        message: 'Access denied',
+      });
     }
-    next(); // call the next middleware function
-}
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    if (!verified) {
+      console.log('Access denied (invalid token)');
+      return res.status(401).json({
+        success: false,
+        message: 'Access denied',
+      });
+    }
+
+    console.log('User authenticated');
+    req.user = verified;
+    next();
+  } catch (error) {
+    console.log('Authentication error:', error.message);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+};
+
+module.exports = authMiddleware;

@@ -40,14 +40,14 @@ const Footer = ({ setAuth, isAuthenticated }) => {
                     </div>
                     <div>
                         <span className="footer-title">Office</span>
-                        <a className="link link-hover" href='https://www.google.com/maps/place/Kathmandu'>Kathmandu 44600</a>
-                        <a className="link link-hover" href='https://www.google.com/maps/place/Bagmati'>Bagmati, Nepal</a>
+                        <a className="link link-hover" href='https://www.google.com/maps/place/Kumasi'>Kumasi, Ghana</a>
+                        <a className="link link-hover" href='https://www.google.com/maps/place/Accra'>Accra, Ghana</a>
                     </div>
                 </footer>
                 <footer className="footer bg-white text-slate-600">
                     <hr className=" border-gray-400" />
                     <div className="flex flex-col items-center justify-between">
-                        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {new Date().getFullYear()} <a href="/" className="hover:underline">GharBikri</a>™. All Rights Reserved.
+                        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© {new Date().getFullYear()} <a href="/" className="hover:underline">PropertyPro</a>™. All Rights Reserved.
                         </span>
                         <div className="flex mt-4 space-x-6 sm:justify-center sm:mt-0">
                             <a href="https://www.facebook.com/" className="text-gray-500 hover:text-blue-700">

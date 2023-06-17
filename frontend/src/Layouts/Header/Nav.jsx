@@ -287,7 +287,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                     name="user_email"
                                                     type="email"
                                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-00 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
-                                                    placeholder="sammy12@gmail.com"
+                                                    placeholder="example@example.com"
                                                     value={user_email}
                                                     onChange={(e) => onChange(e)}
                                                 />

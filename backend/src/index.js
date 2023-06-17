@@ -8,10 +8,8 @@ const cors = require('cors');
 app.use(express.json()) // req.body
 app.use(express.urlencoded({ extended: true })) // req.body
 
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-}));
+// Enable CORS middleware
+app.use(cors());
 
 // routes
 const routes = require('./routes');

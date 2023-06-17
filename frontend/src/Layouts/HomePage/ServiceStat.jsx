@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const stats = [
-    { id: 1, name: 'Apartment Sale', value: '400+' },
-    { id: 2, name: 'Completed Project', value: '200+' },
-    { id: 3, name: 'Happy Client', value: '500+' },
+    { id: 1, name: 'Apartment Sold', value: '42500+' },
+    { id: 2, name: 'Houses Sold', value: '42200+' },
+    { id: 3, name: 'Apts for Rent', value: '4102500+' },
 ]
 
 const Stats = () => {

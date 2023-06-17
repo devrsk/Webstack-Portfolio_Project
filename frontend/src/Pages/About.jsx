@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Team from "../Layouts/About/Team";
-import Featured from "../Layouts/About/Featured";
 import MiniNav from "../components/MiniNav/MiniNav";
 import { FaUsers, FaHeadset, FaDesktop, FaCertificate, FaShoppingCart, FaHandshake, FaKey } from "react-icons/fa";
 
@@ -171,7 +170,7 @@ const About = () => {
 
                         <div>
                             <p className="text-gray-800">
-                                At GharBikri, we believe in transparency and honesty in all our dealings. We understand the importance of clear communication, and we make sure that our clients are always kept informed throughout the process. Our goal is to establish long-term relationships with our clients by providing them with the best possible service and exceeding their expectations.
+                                At PropertyPro, we believe in transparency and honesty in all our dealings. We understand the importance of clear communication, and we make sure that our clients are always kept informed throughout the process. Our goal is to establish long-term relationships with our clients by providing them with the best possible service and exceeding their expectations.
                             </p>
                             <br />
                             <p className="text-gray-800">

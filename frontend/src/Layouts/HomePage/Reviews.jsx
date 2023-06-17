@@ -6,17 +6,17 @@ function Testimonials() {
     const testimonials = [
         {
             avatar: "https://randomuser.me/api/portraits/women/40.jpg",
-            name: "Samantha Ray",
-            quote: "I had a fantastic experience working with the GharBikri team! They were knowledgeable, professional, and went above and beyond to find me the perfect home. I highly recommend them!"
+            name: "Ama K",
+            quote: "I had a fantastic experience working with the PropertyPro team! They were knowledgeable, professional, and went above and beyond to find me the perfect home. I highly recommend them!"
         },
         {
             avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-            name: "Simon andrew",
+            name: "Kofi B",
             quote: "I was impressed with the level of expertise and personalized service I received from this real estate agency. They made the home buying process a breeze and I couldn't be happier with my new home!"
         },
         {
             avatar: "https://randomuser.me/api/portraits/women/86.jpg",
-            name: "Lisa M. Smith",
+            name: "Afia S",
             quote: "Working with this team was an absolute pleasure! Their commitment to finding me the perfect property was unmatched. I highly recommend them to anyone looking for a top-notch real estate experience."
         },
     ]

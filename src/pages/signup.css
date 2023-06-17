@@ -1,0 +1,82 @@
+.pageContainer {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.pageHeader {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.main {
+  margin-top: 30px;
+}
+
+.nameInput,
+.emailInput,
+.phoneNumberInput,
+.passwordInput {
+  width: 300px;
+  height: 40px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.passwordInputDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.showPassword {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.forgotPasswordLink,
+.registerLink {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #777;
+  text-decoration: underline;
+}
+
+.signUpBar,
+.signInBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.signUpText,
+.signInText {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.signUpButton,
+.signInButton {
+  border: none;
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signUpButton:hover,
+.signInButton:hover {
+  background-color: #0056b3;
+}
+
+.registerLink {
+  margin-top: 20px;
+}
+

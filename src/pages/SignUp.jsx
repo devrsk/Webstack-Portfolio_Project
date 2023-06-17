@@ -11,7 +11,6 @@ import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRig
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
-//import "./Profile.css";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -65,83 +64,99 @@ function SignUp() {
   return (
     <>
       <div
-  className="pageContainer"
-  style={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-  }}
->
-  <form
-    className="formContainer"
-    onSubmit={onSubmit}
-    style={{
-      border: '1px solid #ccc',
-      padding: '20px',
-      margin: '20px',
-      maxWidth: '400px',
-    }}
-  >
-    <header>
-      <p className="pageHeader">Welcome back!</p>
-    </header>
-    <main>
-      <input
-        type="text"
-        className="nameInput"
-        placeholder="Name"
-        id="name"
-        value={name}
-        onChange={onChange}
-      />
-      <input
-        type="email"
-        className="emailInput"
-        placeholder="Email"
-        id="email"
-        value={email}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        className="phoneNumberInput"
-        placeholder="Phone Number"
-        id="phoneNumber"
-        value={phoneNumber}
-        onChange={onChange}
-      />
-      <div className="passwordInputDiv">
-        <input
-          type={showPassword ? "text" : "password"}
-          className="passwordInput"
-          placeholder="Password"
-          id="password"
-          value={password}
-          onChange={onChange}
-        />
-        <img
-          src={visibilityIcon}
-          alt="show password"
-          className="showPassword"
-          onClick={() => setShowPassword((prevState) => !prevState)}
-        />
+        className="pageContainer"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <form
+          className="formContainer"
+          onSubmit={onSubmit}
+          style={{
+            border: "1px solid #ccc",
+            padding: "20px",
+            margin: "20px",
+            maxWidth: "400px",
+          }}
+        >
+          <header>
+            <p className="pageHeader">Welcome! Sign Up</p>
+          </header>
+          <main>
+            <input
+              type="text"
+              className="nameInput"
+              placeholder="Name"
+              id="name"
+              value={name}
+              onChange={onChange}
+            />
+            <input
+              type="email"
+              className="emailInput"
+              placeholder="Email"
+              id="email"
+              value={email}
+              onChange={onChange}
+            />
+            <input
+              type="text"
+              className="phoneNumberInput nameInput"
+              placeholder="Phone Number"
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={onChange}
+            />
+            <div className="passwordInputDiv">
+              <input
+                type={showPassword ? "text" : "password"}
+                className="passwordInput nameInput"
+                placeholder="Password"
+                id="password"
+                value={password}
+                onChange={onChange}
+              />
+              <img
+                src={visibilityIcon}
+                alt="show password"
+                className="showPassword"
+                style={{
+                  cursor: "pointer",
+                  position: "absolute",
+                  top: "50%",
+                  right: "10px",
+                  transform: "translateY(-50%)",
+                }}
+                onClick={() => setShowPassword((prevState) => !prevState)}
+              />
+            </div>
+
+            <Link to="/forgot-password" className="forgotPasswordLink">
+              Forgot Password
+            </Link>
+
+            <div
+              className="signUpBar"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginTop: "10px",
+              }}
+            >
+              <p className="signUpText">Sign Up</p>
+              <button
+                className="signUpButton"
+                style={{ width: "50px", height: "50px" }}
+              >
+                <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
+              </button>
+            </div>
+          </main>
+        </form>
       </div>
-
-      <Link to="/forgot-password" className="forgotPasswordLink">
-        Forgot Password
-      </Link>
-
-      <div className="signUpBar">
-        <p className="signUpText">Sign Up</p>
-        <button className="signUpButton">
-          <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
-        </button>
-      </div>
-    </main>
-  </form>
-</div>
-
     </>
   );
 }

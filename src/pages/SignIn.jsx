@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
@@ -16,6 +16,7 @@ function SignIn() {
   const { email, password } = formData;
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -44,15 +45,39 @@ function SignIn() {
     }
   };
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
-      <div className="pageContainer">
+      <div
+        className="pageContainer"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
         <header>
+          <button onClick={goBack} style={{ marginBottom: "10px" }}>
+            Go Back
+          </button>
           <p className="pageHeader">Welcome Back!</p>
         </header>
 
-        <main>
-          <form onSubmit={onSubmit}>
+        <form
+          className="formContainer"
+          onSubmit={onSubmit}
+          style={{
+            border: "1px solid #ccc",
+            padding: "20px",
+            margin: "20px",
+            maxWidth: "400px",
+          }}
+        >
+          <main>
             <input
               type="email"
               className="emailInput"
@@ -75,27 +100,22 @@ function SignIn() {
                 alt="show password"
                 className="showPassword"
                 onClick={() => setShowPassword((prevState) => !prevState)}
+                style={{ marginLeft: "5px", cursor: "pointer" }}
               />
             </div>
 
-            <Link to="/forgot-password" className="forgotPasswordLink">
+            <Link to="/forgot-password" className="forgotPasswordLink" style={{ marginTop: "10px" }}>
               Forgot Password
             </Link>
 
-            <div className="signInBar">
+            <div className="signInBar" style={{ marginTop: "10px" }}>
               <p className="signInText">Sign In</p>
               <button className="signInButton">
                 <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
               </button>
             </div>
-          </form>
-
-          <OAuth />
-
-          <Link to="/sign-up" className="registerLink">
-            Sign Up Instead
-          </Link>
-        </main>
+          </main>
+        </form>
       </div>
     </>
   );

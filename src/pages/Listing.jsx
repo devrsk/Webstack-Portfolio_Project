@@ -35,6 +35,8 @@ function Listing() {
       if (docSnap.exists()) {
         setListing(docSnap.data());
         setLoading(false);
+      } else {
+        console.log("Listing does not exist");
       }
     };
 
@@ -42,6 +44,7 @@ function Listing() {
   }, [navigate, params.listingId]);
 
   if (loading) {
+    console.log("Loading...");
     return <Spinner />;
   }
 

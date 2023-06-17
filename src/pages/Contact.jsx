@@ -14,13 +14,25 @@ function Contact() {
 
   useEffect(() => {
     const getLandlord = async () => {
-      const docRef = doc(db, "users", params.landlordId);
-      const docSnap = await getDoc(docRef);
+      console.log("Fetching landlord data...");
 
-      if (docSnap.exists()) {
-        setLandlord(docSnap.data());
-      } else {
-        toast.error("Could not get landloard data");
+      const docRef = doc(db, "users", params.landlordId);
+      console.log("docRef:", docRef);
+
+      try {
+        const docSnap = await getDoc(docRef);
+        console.log("docSnap:", docSnap);
+
+        if (docSnap.exists()) {
+          console.log("Landlord data retrieved:", docSnap.data());
+          setLandlord(docSnap.data());
+        } else {
+          console.log("Landlord data not found.");
+          toast.error("Could not get landlord datai 1");
+        }
+      } catch (error) {
+        console.log("Error fetching landlord data:", error);
+        toast.error("Could not fetch landlord data 2");
       }
     };
 
@@ -30,6 +42,8 @@ function Contact() {
   const onChange = (e) => {
     setMessage(e.target.value);
   };
+
+  console.log("Landlord:", landlord);
 
   return (
     <div className="pageContainer">

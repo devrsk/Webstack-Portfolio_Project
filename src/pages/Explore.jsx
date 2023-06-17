@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import rentCategoryImage from "../assets/jpg/rentCategoryImage.jpg";
 import sellCategoryImage from "../assets/jpg/sellCategoryImage.jpg";
 import Slider from "../components/Slider";
+import NavigationBar from "./Header.jsx";
 
 function Explore() {
   return (
     <div className="explore">
       <header>
-        <p className="pageHeader">Home</p>
+	<NavigationBar/>
+<p className="pageHeader">Home</p>
       </header>
 
       <main>

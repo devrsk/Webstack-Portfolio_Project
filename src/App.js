@@ -14,7 +14,7 @@ import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing";
 import Listing from "./pages/Listing";
 import Contact from "./pages/Contact";
-
+import ContactUs from "./pages/ContactUs";
 function App() {
   return (
     <>
@@ -39,6 +39,7 @@ function App() {
             path="/category/:categoryName/:listingId"
             element={<Listing />}
           />
+	<Route path="/contact-us" element={<ContactUs />} />
           <Route path="/contact/:landlordId" element={<Contact />} />
         </Routes>
         <Navbar />

@@ -3,6 +3,7 @@ import {
   updateDoc,
   doc,
   collection,
+  getDoc,
   getDocs,
   query,
   where,
@@ -18,6 +19,7 @@ import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
 import ListingItem from "../components/ListingItem";
 import "./Profile.css";
+import NavigationBar from "./Header.jsx";
 
 function Profile() {
   const auth = getAuth();
@@ -69,7 +71,24 @@ function Profile() {
       }
     };
 
+    const fetchPhoneNumber = async () => {
+      try {
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.data();
+        if (userData && userData.phoneNumber) {
+          setFormData((prevState) => ({
+            ...prevState,
+            phoneNumber: userData.phoneNumber,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching phone number:", error);
+      }
+    };
+
     fetchUserListings();
+    fetchPhoneNumber();
   }, [auth.currentUser.uid]);
 
   const onLogout = () => {
@@ -138,6 +157,7 @@ function Profile() {
   return (
     <div className="profile">
       <header className="profileHeader">
+	<NavigationBar/>
         <p className="pageHeader">My Profile</p>
         <button className="logOut" type="button" onClick={onLogout}>
           Log Out
@@ -194,8 +214,8 @@ function Profile() {
               <input
                 type="text"
                 id="phoneNumber"
-                className={!changeDetails ? "profilePhoneNumber" : "profilePhoneNumberActive"}
-                disabled={!changeDetails}
+                className={!changeDetails ? "profileName" : "profileNameActive"}
+		disabled={!changeDetails}
                 value={phoneNumber || ""}
                 onChange={onChange}
                 placeholder="N/A"

@@ -5,7 +5,6 @@ import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRig
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
-import "./Profile.css";
 
 function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -45,79 +44,82 @@ function SignIn() {
     }
   };
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
   return (
-    <>
-      <div
-        className="pageContainer"
+    <div
+      className="pageContainer"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+      }}
+    >
+      <form
+        className="formContainer"
+        onSubmit={onSubmit}
         style={{
+          border: "1px solid #ccc",
+          padding: "20px",
+          margin: "20px",
+          maxWidth: "400px",
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
           alignItems: "center",
-          minHeight: "100vh",
         }}
       >
         <header>
-          <button onClick={goBack} style={{ marginBottom: "10px" }}>
-            Go Back
-          </button>
           <p className="pageHeader">Welcome Back!</p>
+          <Link to="/sign-up" style={{ color: "blue" }}>
+            Don't have an account? Click to Register
+          </Link>
         </header>
 
-        <form
-          className="formContainer"
-          onSubmit={onSubmit}
-          style={{
-            border: "1px solid #ccc",
-            padding: "20px",
-            margin: "20px",
-            maxWidth: "400px",
-          }}
-        >
-          <main>
+        <main>
+          <input
+            type="email"
+            className="emailInput"
+            placeholder="Email"
+            id="email"
+            value={email}
+            onChange={onChange}
+          />
+          <div className="passwordInputDiv">
             <input
-              type="email"
-              className="emailInput"
-              placeholder="Email"
-              id="email"
-              value={email}
+              type={showPassword ? "text" : "password"}
+              className="passwordInput"
+              placeholder="Password"
+              id="password"
+              value={password}
               onChange={onChange}
             />
-            <div className="passwordInputDiv">
-              <input
-                type={showPassword ? "text" : "password"}
-                className="passwordInput"
-                placeholder="Password"
-                id="password"
-                value={password}
-                onChange={onChange}
-              />
-              <img
-                src={visibilityIcon}
-                alt="show password"
-                className="showPassword"
-                onClick={() => setShowPassword((prevState) => !prevState)}
-                style={{ marginLeft: "5px", cursor: "pointer" }}
-              />
-            </div>
+            <img
+              src={visibilityIcon}
+              alt="show password"
+              className="showPassword"
+              onClick={() => setShowPassword((prevState) => !prevState)}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
 
-            <Link to="/forgot-password" className="forgotPasswordLink" style={{ marginTop: "10px" }}>
-              Forgot Password
-            </Link>
+          <Link
+            to="/forgot-password"
+            className="forgotPasswordLink"
+            style={{ marginTop: "5px" }}
+          >
+            Forgot Password
+          </Link>
 
-            <div className="signInBar" style={{ marginTop: "10px" }}>
-              <p className="signInText">Sign In</p>
-              <button className="signInButton">
-                <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
-              </button>
-            </div>
-          </main>
-        </form>
-      </div>
-    </>
+          <div className="signInBar" style={{ marginTop: "10px" }}>
+            <p className="signInText">Sign In</p>
+            <button className="signInButton">
+              <ArrowRightIcon fill="#ffffff" width="34px" height="34px" />
+            </button>
+          </div>
+
+          <OAuth provider="google" />
+        </main>
+      </form>
+    </div>
   );
 }
 

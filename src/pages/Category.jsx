@@ -13,6 +13,7 @@ import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
+import NavigationBar from "./Header.jsx";
 
 function Category() {
   const [listings, setListings] = useState([]);
@@ -90,6 +91,7 @@ function Category() {
   return (
     <div className="category">
       <header>
+	<NavigationBar/>
         <p className="pageHeader">
           {params.categoryName === "rent"
             ? "Places for rent"

@@ -12,6 +12,7 @@ import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
+import NavigationBar from "./Header.jsx";
 
 function Offers() {
   const [listings, setListings] = useState(null);
@@ -105,6 +106,7 @@ function Offers() {
   return (
     <div className="category">
       <header>
+	<NavigationBar/>
         <p className="pageHeader">Offers</p>
       </header>
 

@@ -6,6 +6,7 @@ import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
 import shareIcon from "../assets/svg/shareIcon.svg";
+import NavigationBar from "./Header.jsx";
 
 // import Swiper core and required modules
 import { Pagination } from "swiper";
@@ -52,6 +53,7 @@ function Listing() {
 
   return (
     <main>
+	<NavigationBar/>
       <Swiper
         modules={[Pagination]}
         spaceBetween={40}

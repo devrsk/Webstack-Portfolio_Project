@@ -16,20 +16,12 @@ import { loginValidate } from "../../Middleware/loginValidation";
 import { registerValidate } from "../../Middleware/registerValidation";
 
 function Nav({ setAuth, isAuthenticated }) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    //Create a login and signup modal   
+    const [loginModal, setLoginModal] = useState(false);
+    const [registerModal, setRegisterModal] = useState(false);
 
-    const navigate = useNavigate();
-    const location = useLocation();
 
-    const refreshPage = () => {
-        navigate("/", { replace: true });
-        window.location.reload();
-    };
-
-    // error state
-    const [error, setError] = useState({});
-
-    // inputs state
+    // Create a state variable called inputs and a function called setInputs
     const [inputs, setInputs] = useState({
         user_email: "",
         password: "",
@@ -45,7 +37,10 @@ function Nav({ setAuth, isAuthenticated }) {
             [e.target.name]: e.target.value,
         });
     };
-//LOGIN USER WHEN 
+
+    // error state
+    const [error, setError] = useState({});
+    // e is the event object
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
@@ -64,7 +59,7 @@ function Nav({ setAuth, isAuthenticated }) {
                 if (parseRes.token) {
                     localStorage.setItem("token", parseRes.token); // localStorage is a browser API that stores data with no expiration
                     setAuth(true);
-                    setShowModal(false);
+                    setLoginModal(false);
                     toastSuccess("Logged in successfully!");
                     setTimeout(() => {
                         refreshPage();
@@ -110,13 +105,31 @@ function Nav({ setAuth, isAuthenticated }) {
 
     const [user, setUser] = useState({
         user_email: "",
+        user_name: "",
+        user_phone: "",
+        user_address: "",
+        user_image: "",
+        user_id: "",
     });
 
     const loadUser = async () => {
-        const result = await axios.get(`${SERVER_URL}/api/dashboard`, {
-            headers: { token: localStorage.token },
-        });
-        setUser(result.data);
+        try {
+            const response = await axios.get(`${SERVER_URL}/api/auth/user`, {
+                headers: { token: localStorage.token },
+            });
+            const parseRes = response.data;
+            setUser({
+                ...user,
+                user_email: parseRes.user_email,
+                user_name: parseRes.user_name,
+                user_phone: parseRes.user_phone,
+                user_address: parseRes.user_address,
+                user_image: parseRes.user_image,
+                user_id: parseRes.user_id,
+            });
+        } catch (err) {
+            console.error(err.message);
+        }
     };
 
     useEffect(() => {
@@ -124,120 +137,54 @@ function Nav({ setAuth, isAuthenticated }) {
     }, []);
 
 
-    // Create a state variable called registerInputs and a function called setInputs
-    const [registerInputs, setregisterInputs] = useState({
-        register_user_email: "",
-        register_first_name: "",
-        register_last_name: "",
-        register_password: "",
-        register_phone_number: "",
-        register_address_city: "",
-        register_address_state: ""
-    });
-
-    // registerError state
-    const [registerError, setregisterError] = useState(
-        {
-            register_user_email: "",
-            register_first_name: "",
-            register_last_name: "",
-            register_password: "",
-            register_phone_number: "",
-            register_address_city: "",
-            register_address_state: ""
-        }
-    );
-
-    // Destructure the registerInputs object
-    const {
-        register_user_email,
-        register_first_name,
-        register_last_name,
-        register_password,
-        register_phone_number,
-        register_address_city,
-        register_address_state
-    } = registerInputs;
-
-    // e is an event object
-    const onRegisterChange = (e) => {
-        setregisterInputs({
-            ...registerInputs,
-            [e.target.name]: e.target.value
-        }); // ...registerInputs is a spread operator that copies the current state of registerInputs 
-        // console.log(e.target.name, e.target.value)
-        // [e.target.name] is a computed property name that will be the name of the input field 
-        // e.target.value is the value of the input field
-    };
-
-
-// REGISTER NEW USER OR CREATE NEW ACCOUNT
+    const [errorRegister, setErrorRegister] = useState({});
+    // e is the event object
     const onSubmitRegisterForm = async (e) => {
-        e.preventDefault(); // Prevents the default behavior of the browser
+        e.preventDefault();
 
-        const registerErrors = registerValidate(registerInputs);
-        setregisterError(
-            {
-                register_user_email: registerErrors.register_user_email,
-                register_first_name: registerErrors.register_first_name,
-                register_last_name: registerErrors.register_last_name,
-                register_password: registerErrors.register_password,
-                register_phone_number: registerErrors.register_phone_number,
-                register_address_city: registerErrors.register_address_city,
-                register_address_state: registerErrors.register_address_state
-            }
-        );
+        const error = registerValidate(inputs);
 
-        // console.log(Object.keys(registerError).length);
+        if (error) {
+            setErrorRegister(error);
+        }
 
-        if (Object.keys(registerErrors).length === 0) {
+        if (Object.keys(error).length === 0) {
             try {
-                const body = {
-                    user_email: register_user_email,
-                    first_name: register_first_name,
-                    last_name: register_last_name,
-                    password: register_password,
-                    phone_number: register_phone_number,
-                    address_city: register_address_city,
-                    address_state: register_address_state
-                };
+                const body = { user_email, password };
                 const response = await axios.post(`${SERVER_URL}/api/auth/register`, body);
                 const parseRes = response.data;
 
                 if (parseRes.token) {
-                    localStorage.setItem("token", parseRes.token);
+                    localStorage.setItem("token", parseRes.token); // localStorage is a browser API that stores data with no expiration
                     setAuth(true);
-                    toastSuccess('Registered successfully!');
-                    // console.log("Registered successfully!");
-                    // close the modal
-                    setShowRegisterModal(false);
+                    setRegisterModal(false);
+                    toastSuccess("Registered successfully!");
                     setTimeout(() => {
                         refreshPage();
                     }, 2000);
+                    loadUser();
+                    // console.log("Logged in successfully!");
+                    // close the modal
                 } else {
                     setAuth(false);
                 }
             } catch (err) {
+                console.error(err.message);
                 if (err.response.status === 422) {
-                    const registerErrors = err.response.data.registerErrors;
-                    const registerErrorMessage = registerErrors.map((registerError) => registerError.msg).join(" & ");
-                    console.log(registerErrorMessage)
-                    toastError(registerErrorMessage);
+                    let errors = (err.response.data.errors[0].msg)
+                    console.log(errors)
+                    toastError(errors);
+                } else {
+                    toastError("Server error!");
+
                 }
             }
-        }
-        else {
-            // if all fields are empty, display registerError message
-            if (!register_user_email && !register_first_name && !register_last_name && !register_password && !register_phone_number && !register_address_city && !register_address_state) {
-                toastError('All fields are required!');
-            }
-            else {
-                const registerErrorMessages = Object.values(registerErrors).filter(registerError => registerError !== null && registerError !== undefined);
-                registerErrorMessages.forEach(registerError => toastError(registerError));
-            }
+        } else {
+            const errorMessages = Object.values(error).filter(errors => errors !== null && errors !== undefined);
+            errorMessages.forEach(error => toastError(error));
         }
     };
-
+    
     return (
         <header className="p-6 max-w-[1280px] mx-auto">
             <style

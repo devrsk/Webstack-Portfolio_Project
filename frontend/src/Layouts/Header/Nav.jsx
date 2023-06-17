@@ -5,13 +5,13 @@ import {
     Bars3Icon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
-import logo from "../../assets/Images/propertypro.png";
+import logo from "../../assets/Images/GharBikri-logo.png";
 import Profile from "../Header/Avatar";
 import axios from "axios";
 import { FcUnlock, FcSettings, FcLike, FcHome } from "react-icons/fc";
-import { SERVER_URL } from "../../Config/Config";
+import { SERVER_URL } from "../../Config";
 
-import { toastSuccess, toastError } from "../../components/ToastMessage";
+import { toastSuccess, toastError } from "../../components/Toast";
 import { loginValidate } from "../../Middleware/loginValidation";
 import { registerValidate } from "../../Middleware/registerValidation";
 
@@ -45,7 +45,7 @@ function Nav({ setAuth, isAuthenticated }) {
             [e.target.name]: e.target.value,
         });
     };
-
+//LOGIN USER WHEN 
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
@@ -123,6 +123,7 @@ function Nav({ setAuth, isAuthenticated }) {
         loadUser();
     }, []);
 
+
     // Create a state variable called registerInputs and a function called setInputs
     const [registerInputs, setregisterInputs] = useState({
         register_user_email: "",
@@ -169,6 +170,8 @@ function Nav({ setAuth, isAuthenticated }) {
         // e.target.value is the value of the input field
     };
 
+
+// REGISTER NEW USER OR CREATE NEW ACCOUNT
     const onSubmitRegisterForm = async (e) => {
         e.preventDefault(); // Prevents the default behavior of the browser
 
@@ -244,7 +247,7 @@ function Nav({ setAuth, isAuthenticated }) {
                 }}
             />
 
-            {/* login modal  */}
+            {/* LOGIN MODAL  */}
             {showModal && (
                 <div className="fixed z-50 inset-0 overflow-y-auto" >
                     <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -271,7 +274,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                         </p>
                                     </div>
 
-                                    {/* main form */}
+                                    {/* LOGIN form */}
                                     <form
                                         onSubmit={onSubmitForm}
                                         className="space-y-5"
@@ -287,7 +290,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                     name="user_email"
                                                     type="email"
                                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-00 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
-                                                    placeholder="example@example.com"
+                                                    placeholder="user@example.com"
                                                     value={user_email}
                                                     onChange={(e) => onChange(e)}
                                                 />
@@ -340,7 +343,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                             </Link>
                                         </div>
 
-                                        {/* continue with google */}
+                                        {/* LOGIN WITH GOOGLE */}
                                         <div className="mt-5">
                                             <button className="w-full flex items-center justify-center gap-x-3 py-2.5 mt-5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
                                                 <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -356,7 +359,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                         </clipPath>
                                                     </defs>
                                                 </svg>
-                                                Continue with Google
+                                                Login with Google
                                             </button>
                                         </div>
 
@@ -369,7 +372,7 @@ function Nav({ setAuth, isAuthenticated }) {
                 </div>
             )}
 
-            {/* register modal */}
+            {/* REGISTER modal */}
             {showRegisterModal && (
                 <div className="fixed z-50 inset-0 overflow-y-auto" >
                     <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -395,7 +398,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                         </p>
                                     </div>
 
-                                    {/* main form */}
+                                    {/* REGISTER main form */}
                                     <form
                                         onSubmit={onSubmitRegisterForm}
                                         className="space-y-5"
@@ -460,7 +463,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                     name="register_user_email"
                                                     type="email"
                                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
-                                                    placeholder="sammy12@gmail.com"
+                                                    placeholder="username@example.com"
                                                     value={register_user_email}
                                                     onChange={(e) => onRegisterChange(e)}
                                                 />
@@ -510,7 +513,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                                     value={register_phone_number}
                                                     onChange={(e) => onRegisterChange(e)}
-                                                    placeholder='9841234567'
+                                                    placeholder='0123456789'
                                                 />
                                             </div>
                                             {registerError.register_phone_number && (
@@ -535,7 +538,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200 "
                                                         value={register_address_city}
                                                         onChange={(e) => onRegisterChange(e)}
-                                                        placeholder='Kathmandu'
+                                                        placeholder='Enter City'
                                                     />
                                                 </div>
                                                 {registerError.register_address_city && (
@@ -558,7 +561,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                                         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none focus:border-cyan-600 shadow-sm -ml-10 pl-10 pr-3 rounded-lg border-2 border-gray-200"
                                                         value={register_address_state}
                                                         onChange={(e) => onRegisterChange(e)}
-                                                        placeholder='Bagmati'
+                                                        placeholder='Enter State or Country'
                                                     />
                                                 </div>
                                                 {registerError.register_address_state && (
@@ -574,7 +577,7 @@ function Nav({ setAuth, isAuthenticated }) {
                                             className="w-full px-4 py-2 text-white font-medium bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-600 rounded-lg duration-150"
                                             type="submit"
                                         >
-                                            Create account
+                                            Create Account
                                         </button>
 
                                         {/*  */}
@@ -629,7 +632,7 @@ function Nav({ setAuth, isAuthenticated }) {
                 <div className="flex lg:flex-2">
                     <Link to="/" className="-m-1.5 p-1.5">
                         <span className="sr-only">GharBikri</span>
-                        <img className="h-12 w-auto" src={logo} alt="GharBikri" />
+                        <img className="h-12 w-auto" src={logo} alt="PropertyPro" />
                     </Link>
                 </div>
 
@@ -856,3 +859,4 @@ function Nav({ setAuth, isAuthenticated }) {
 }
 
 export default Nav;
+

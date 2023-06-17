@@ -28,11 +28,11 @@ function Contact() {
           setLandlord(docSnap.data());
         } else {
           console.log("Landlord data not found.");
-          toast.error("Could not get landlord datai 1");
+          toast.error("Could not get landlord data");
         }
       } catch (error) {
         console.log("Error fetching landlord data:", error);
-        toast.error("Could not fetch landlord data 2");
+        toast.error("Could not fetch landlord data");
       }
     };
 
@@ -55,6 +55,9 @@ function Contact() {
         <main>
           <div className="contactLandlord">
             <p className="landlordName">Contact {landlord?.name}</p>
+            <div className="phoneNumber">
+              <p>Phone Number: {landlord?.phoneNumber || "N/A"}</p>
+            </div>
           </div>
 
           <form className="messageForm">

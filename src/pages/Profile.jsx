@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg";
 import homeIcon from "../assets/svg/homeIcon.svg";
 import ListingItem from "../components/ListingItem";
+import "./Profile.css";
 
 function Profile() {
   const auth = getAuth();
@@ -28,9 +29,10 @@ function Profile() {
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
+    phoneNumber: "",
   });
 
-  const { name, email } = formData;
+  const { name, email, phoneNumber } = formData;
 
   const navigate = useNavigate();
 
@@ -90,6 +92,15 @@ function Profile() {
         });
         console.log("Profile details updated successfully");
       }
+      if (phoneNumber.trim() !== "") {
+        // Update phone number in firestore
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        await updateDoc(userRef, {
+          phoneNumber: phoneNumber,
+        });
+        console.log("Phone number updated successfully");
+      }
+      toast.success("Profile details updated!");
     } catch (error) {
       console.error("Error updating profile details:", error);
       toast.error("Could not update profile details");
@@ -149,22 +160,47 @@ function Profile() {
 
         <div className="profileCard">
           <form>
-            <input
-              type="text"
-              id="name"
-              className={!changeDetails ? "profileName" : "profileNameActive"}
-              disabled={!changeDetails}
-              value={name}
-              onChange={onChange}
-            />
-            <input
-              type="text"
-              id="email"
-              className={!changeDetails ? "profileEmail" : "profileEmailActive"}
-              disabled={!changeDetails}
-              value={email}
-              onChange={onChange}
-            />
+            <div className="formGroup">
+              <label htmlFor="name">
+                <strong>Name</strong>
+              </label>
+              <input
+                type="text"
+                id="name"
+                className={!changeDetails ? "profileName" : "profileNameActive"}
+                disabled={!changeDetails}
+                value={name}
+                onChange={onChange}
+              />
+            </div>
+
+            <div className="formGroup">
+              <label htmlFor="email">
+                <strong>Email (*Cannot Change)</strong>
+              </label>
+              <input
+                type="text"
+                id="email"
+                className="profileEmail"
+                disabled={true}
+                value={email}
+              />
+            </div>
+
+            <div className="formGroup">
+              <label htmlFor="phoneNumber">
+                <strong>Phone Number</strong>
+              </label>
+              <input
+                type="text"
+                id="phoneNumber"
+                className={!changeDetails ? "profilePhoneNumber" : "profilePhoneNumberActive"}
+                disabled={!changeDetails}
+                value={phoneNumber || ""}
+                onChange={onChange}
+                placeholder="N/A"
+              />
+            </div>
           </form>
         </div>
 

@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 class allUserRouter {
   allUser(db, req, res) {
-    db.query('SELECT "ID", "username", "Email", "a_type", "approved" FROM "ACCOUNT"', (err, data, fields) => {
+    db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data) => {
       if (err) {
         console.log(err);
         res.json({
@@ -14,7 +14,7 @@ class allUserRouter {
       }
       res.json({
         success: true,
-        dataset: data
+        dataset: data.rows
       });
       return;
     });
@@ -22,8 +22,9 @@ class allUserRouter {
 
   updateUser(db, req, res) {
     let userID = req.body.id;
+
     let cols = ['Y', userID];
-    db.query('UPDATE "ACCOUNT" SET "approved" = $1 WHERE "ID" = $2', cols, (err) => {
+    db.query('UPDATE ACCOUNT SET approved = $1 WHERE ID = $2', cols, (err) => {
       if (err) {
         console.log(err);
         res.json({
@@ -32,7 +33,8 @@ class allUserRouter {
         });
         return;
       }
-      db.query('SELECT "ID", "username", "Email", "a_type", "approved" FROM "ACCOUNT"', (err, data, fields) => {
+
+      db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data) => {
         if (err) {
           console.log(err);
           res.json({
@@ -44,7 +46,7 @@ class allUserRouter {
         console.log(data);
         res.json({
           success: true,
-          dataset: data
+          dataset: data.rows
         });
         return;
       });
@@ -53,8 +55,10 @@ class allUserRouter {
 
   removeUser(db, req, res) {
     let userID = req.body.id;
+
     let cols = [userID];
-    db.query('DELETE FROM "ACCOUNT" WHERE "ID" = $1', cols, (err) => {
+    // since cascaded, if the user is a realtor, it will be automatically deleted
+    db.query('DELETE FROM ACCOUNT WHERE ID = $1', cols, (err) => {
       if (err) {
         console.log(err);
         res.json({
@@ -63,7 +67,8 @@ class allUserRouter {
         });
         return;
       }
-      db.query('SELECT "ID", "username", "Email", "a_type", "approved" FROM "ACCOUNT"', (err, data, fields) => {
+
+      db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data) => {
         if (err) {
           console.log(err);
           res.json({
@@ -75,7 +80,7 @@ class allUserRouter {
         console.log(data);
         res.json({
           success: true,
-          dataset: data
+          dataset: data.rows
         });
         return;
       });

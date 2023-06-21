@@ -1,106 +1,327 @@
-const nodemailer = require('nodemailer');
-const sendEmail = require("../Testing/sendEmail");
-const { pool } = require("./db.js");
+const fs = require('fs');
+const path = require('path');
+const db = require('../Testing/db');
+//npm install express multer --save
+class individualUser {
 
-const buyRequest = (req, res) => {
-  const { ID: Buyer_ID, S_ID: property_ID, name: buyer_name, offer: offer_price } = req.body;
-  const offer_status = 'P'; // Pending status
-
-  pool.connect((err, client, done) => {
-    if (err) {
-      console.log(err);
-      res.json({
-        success: false
-      });
-      return;
-    }
-
-    const selectQuery = 'SELECT Owner_ID, Realtor_ID, pic_dir FROM FOR_SALE WHERE S_ID = $1';
-    const selectParams = [property_ID];
-
-    client.query(selectQuery, selectParams, (err, data) => {
-      if (err) {
-        done();
-        console.log(err);
-        res.json({
-          success: false
-        });
-        return;
-      }
-
-      const owner_ID = data.rows[0].owner_id;
-      const realtor_ID = data.rows[0].realtor_id;
-      const main_pic = data.rows[0].pic_dir + "/outside.png";
-      const insertQuery = 'INSERT INTO BUYER_APPLICATION VALUES ($1, $2, $3, $4, $5, $6, $7)';
-      const insertParams = [Buyer_ID, property_ID, owner_ID, buyer_name, offer_price, offer_status, main_pic];
-
-      client.query(insertQuery, insertParams, (err) => {
-        done();
-        if (err) {
-          console.log(err);
-          res.json({
-            success: false
-          });
-          return;
+    forSaleListing(db, req, res) {
+        let sql = '';
+        let cols = [];
+        console.log("req", req.body.ID);
+        if (req.body.role === 'R') {
+            sql = "SELECT * FROM FOR_SALE WHERE Owner_ID = $1 AND sale_status = 'A' UNION ALL SELECT * FROM FOR_SALE WHERE Realtor_ID = $2 AND sale_status = 'A'";
+            cols = [req.body.ID, req.body.ID];
+        } else {
+            sql = "SELECT * FROM FOR_SALE WHERE Owner_ID = $1 AND sale_status = 'A'";
+            cols = [req.body.ID];
         }
+        db.query(sql, cols, (err, data) => {
 
-        // Send email to owner
-        const ownerQuery = 'SELECT username, Email FROM ACCOUNT WHERE ID = $1';
-        const ownerParams = [owner_ID];
-
-        client.query(ownerQuery, ownerParams, (err, data) => {
-          if (err) {
-            console.log(err);
-            res.json({
-              success: false
-            });
-            return;
-          }
-
-          const ownerUsername = data.rows[0].username;
-          const ownerEmail = data.rows[0].email;
-          let emailContent = `Hi ${ownerUsername},\n${buyer_name} sent you an offer of $${offer_price} for property ${property_ID}.`;
-          emailContent += "\nPlease check your application list to approve/reject.";
-          req.email = ownerEmail;
-          req.title = "Buy Request";
-          req.emailContent = emailContent;
-          const temp = new sendEmail();
-          temp.sendEmail(req, res);
-
-          // Send email to realtor if available
-          if (realtor_ID) {
-            const realtorQuery = 'SELECT username, Email FROM ACCOUNT WHERE ID = $1 OR ID = $2';
-            const realtorParams = [owner_ID, realtor_ID];
-
-            client.query(realtorQuery, realtorParams, (err, data) => {
-              if (err) {
+            if (err) {
                 console.log(err);
                 res.json({
-                  success: false
+                    success: false,
+                    msg: 'false'
                 });
                 return;
-              }
+            }
 
-              const realtorUsername = data.rows[1].username;
-              const realtorEmail = data.rows[1].email;
-              let emailContent = `Hi ${realtorUsername},\n${buyer_name} sent you an offer of $${offer_price} for property ${property_ID}.`;
-              emailContent += "\nPlease check your application list to approve/reject.";
-              req.email = realtorEmail;
-              req.title = "Buy Request";
-              req.emailContent = emailContent;
-              const temp = new sendEmail();
-              temp.sendEmail(req, res);
+            db.query("SELECT * FROM OPEN_HOUSE ORDER BY S_ID ASC", (err, openHouse) => {
+                var i;
+                console.log("open house");
+                console.log(openHouse);
+                var k = 0;
+                for (i = 0; i < data.length; i++) {
+                    //data[i].pic_dir = data[i].pic_dir + '/outside.png'
+                    let pic_folder = data[i].pic_dir;
+                    let pic_folder_path = pic_folder.substring(pic_folder.lastIndexOf("/") + 1);
+                    let directory_name = 'public/forSale/' + pic_folder_path;
+                    console.log(directory_name);
+                    let filenames = fs.readdirSync(directory_name);
+                    console.log(filenames);
+                    var pic_array = [];
+                    var j;
+                    for (j = 0; j < filenames.length; j++) {
+                        pic_array.push(pic_folder + "/" + filenames[j]);
+                    }
+                    console.log(pic_array);
+                    data[i].pic_dir = pic_array;
+                    data[i].main_dir = pic_folder + "/outside.png";
+                    //console.log("test");
+
+                    for (k = 0; k < openHouse.length; k++) {
+                        if (openHouse[k].S_ID === data[i].S_ID) {
+                            data[i].open_house = openHouse[k];
+                        }
+                    }
+                    if (data[i].open_house == undefined) {
+                        data[i].open_house = null;
+                    }
+
+                    // if(k < openHouse.length && openHouse[k].S_ID === data[i].S_ID){
+                    //     data[i].open_house = openHouse[k];
+                    //     k++;
+                    // }
+                }
+
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: 'false'
+                    });
+                    return;
+                }
+
+
+                res.json({
+                    success: true,
+                    dataset: data
+                });
+                return;
             });
-          }
 
-          res.json({
-            success: true,
-            msg: ''
-          });
         });
-      });
-    });
-  });
-};
 
-module.exports = buyRequest;
+    }
+
+
+    buyerApplication(db, req, res) {
+        //let fdata = req.body;
+        //let cols = [fdata.owner, fdata.realtor, fdata.p_type, fdata.apt_num, fdata.street, fdata.city, fdata.state, fdata.zip, fdata.status, fdata.price, fdata.bedroom, fdata.bathroom, fdata.livingroom, fdata.flooring, fdata.parking, fdata.area, fdata.year, fdata.description, pic_path];
+        //let sql = "UPDATE for_sale SET status = 'S' WHERE S_ID = 1";
+        //console.log(cols);
+        if (req.body.role === 'R') {
+            db.query("SELECT S_ID FROM FOR_SALE WHERE Realtor_ID = $1", [req.body.ID], (err, properties) => {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    });
+                    return;
+                }
+
+                if (properties.length > 0) {
+                    //console.log("properties: ", properties[0]);
+                    var i;
+                    let p_list = '(' + properties[0].S_ID;
+                    for (i = 1; i < properties.length; i++) {
+                        p_list = p_list + ', ' + properties[i].S_ID;
+                    }
+                    p_list = p_list + ')';
+                    //console.log("p_list: ", p_list);
+
+                    db.query(`SELECT * FROM BUYER_APPLICATION WHERE (property_ID IN ${p_list} OR owner_ID = ${req.body.ID}) AND offer_status = 'P'`, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            res.json({
+                                success: false,
+                                msg: ''
+                            });
+                            return;
+                        }
+
+                        res.json({
+                            success: true,
+                            dataset: data
+                        });
+                        return;
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        dataset: []
+                    });
+                    return;
+                }
+
+
+            });
+
+        } else {
+            db.query("SELECT * FROM BUYER_APPLICATION WHERE owner_ID = $1 AND offer_status = 'P'", [req.body.ID], (err, data) => {
+
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    });
+                    return;
+                }
+
+                //console.log(data);
+                res.json({
+                    success: true,
+                    dataset: data
+                });
+                return;
+            });
+
+        }
+
+
+    }
+
+    forRentListing(db, req, res) {
+        let sql = '';
+        let cols = [];
+        if (req.body.role === 'R') {
+            sql = "SELECT * FROM FOR_RENT WHERE Owner_ID = $1 AND status = 'A' UNION ALL SELECT * FROM FOR_RENT WHERE Realtor_ID = $2 AND status = 'A'";
+            cols = [req.body.ID, req.body.ID];
+        } else {
+            sql = "SELECT * FROM FOR_RENT WHERE Owner_ID = $1 AND status = 'A'";
+            cols = [req.body.ID];
+        }
+        db.query(sql, cols, (err, data) => {
+
+            if (err) {
+                console.log(err);
+                res.json({
+                    success: false,
+                    msg: 'false'
+                });
+                return;
+            }
+
+            db.query("SELECT * FROM VISIT ORDER BY property_ID ASC, start_time ASC", (err, visit) => {
+                var i;
+                console.log("visit");
+                console.log(visit);
+                var k = 0;
+                for (i = 0; i < data.length; i++) {
+                    //data[i].pic_dir = data[i].pic_dir + '/outside.png'
+                    let pic_folder = data[i].pic_dir;
+                    let pic_folder_path = pic_folder.substring(pic_folder.lastIndexOf("/") + 1);
+                    let directory_name = 'public/forRent/' + pic_folder_path;
+                    console.log(directory_name);
+                    let filenames = fs.readdirSync(directory_name);
+                    console.log(filenames);
+                    var pic_array = [];
+                    var visit_array = [];
+                    var j;
+                    for (j = 0; j < filenames.length; j++) {
+                        pic_array.push(pic_folder + "/" + filenames[j]);
+                    }
+                    console.log(pic_array);
+                    data[i].pic_dir = pic_array;
+                    data[i].main_dir = pic_folder + "/outside.png";
+                    //console.log("test");
+                    for (k = 0; k < visit.length; k++) {
+                        if (visit[k].property_ID === data[i].R_ID) {
+                            visit_array.push(visit[k]);
+                        }
+                    }
+
+                    if (visit_array.length == 0) {
+                        data[i].visit = null;
+                    } else {
+                        data[i].visit = visit_array;
+                        visit_array = [];
+                    }
+
+                    // while(k < visit.length && visit[k].property_ID === data[i].R_ID){
+                    //     visit_array.push(visit[k]);
+                    //     k++;
+                    // }
+                    // data[i].visit = visit_array;
+                }
+
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: 'false'
+                    });
+                    return;
+                }
+
+
+                res.json({
+                    success: true,
+                    dataset: data
+                });
+                return;
+            });
+
+        });
+
+    }
+
+    renterApplication(db, req, res) {
+        //let fdata = req.body;
+        //let cols = [fdata.owner, fdata.realtor, fdata.p_type, fdata.apt_num, fdata.street, fdata.city, fdata.state, fdata.zip, fdata.status, fdata.price, fdata.bedroom, fdata.bathroom, fdata.livingroom, fdata.flooring, fdata.parking, fdata.area, fdata.year, fdata.description, pic_path];
+        //let sql = "UPDATE for_sale SET status = 'S' WHERE S_ID = 1";
+        //console.log(cols);
+        if (req.body.role === 'R') {
+            db.query("SELECT R_ID FROM FOR_RENT WHERE Realtor_ID = $1", [req.body.ID], (err, properties) => {
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    });
+                    return;
+                }
+
+                if (properties.length > 0) {
+                    //console.log("properties: ", properties[0]);
+                    var i;
+                    let p_list = '(' + properties[0].R_ID;
+                    for (i = 1; i < properties.length; i++) {
+                        p_list = p_list + ', ' + properties[i].R_ID;
+                    }
+                    p_list = p_list + ')';
+                    //console.log("p_list: ", p_list);
+
+                    db.query(`SELECT * FROM RENTER_APPLICATION WHERE (property_ID IN ${p_list} OR owner_ID = ${req.body.ID}) AND request_status = 'P'`, (err, data) => {
+                        if (err) {
+                            console.log(err);
+                            res.json({
+                                success: false,
+                                msg: ''
+                            });
+                            return;
+                        }
+
+                        res.json({
+                            success: true,
+                            dataset: data
+                        });
+                        return;
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        dataset: []
+                    });
+                    return;
+                }
+            });
+
+        } else {
+            db.query("SELECT * FROM RENTER_APPLICATION WHERE owner_ID = $1 AND request_status = 'P'", [req.body.ID], (err, data) => {
+
+                if (err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    });
+                    return;
+                }
+
+                //console.log(data);
+                res.json({
+                    success: true,
+                    dataset: data
+                });
+                return;
+            });
+
+        }
+    }
+}
+
+module.exports = individualUser;

@@ -40,8 +40,7 @@
     Approve/Remove users</strong>: The administrator can approve, reject or remove any users if the
     need arises.
 3. <strong>Search</strong>: 
-    All types of roles can search for Sale or rental listings - based on zip code or street
-    address, and/or other attributes – price range, sqft., #bedrooms, #bathrooms, carpet vs
+    All types of roles can search for Sale or rental listings - based on zip code or name, and/or other attributes – price range, sqft., #bedrooms, #bathrooms, carpet vs
     wooden flooring, home type (apartment/townhome/attached Single Family Home or Detached
     Single), open/closed parking, other amenities, Year built etc.
 4. <strong>Save as Favorites</strong>: 

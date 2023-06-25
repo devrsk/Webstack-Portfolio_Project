@@ -1,1 +1,0 @@
-export const DB = 'http://localhost:9000'

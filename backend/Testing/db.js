@@ -1,21 +1,26 @@
-const { Pool } = require('pg');
+const mysql = require('mysql');
 
-// Database
-const pool = new Pool({
-  host: 'localhost',
-  user: 'postgres',
-  password: '123456',
-  database: 'propertypro',
-  port: 5432, // Replace with the appropriate port
+//Database
+const db = mysql.createConnection({
+    host: 'RSKs-MacBook-Pro.local',
+    user: 'root',
+    password: '123456',
+    // password: 'password',
+    database: 'PROPERTYPRO',
+    // insecureAuth : true
 });
 
-pool.connect((err) => {
-  if (err) {
-    console.error('DB connection error');
-    throw err;
-  } else {
-    console.log('Successfully connected to the database');
-  }
+
+db.connect(function(err) {
+    if(err){
+        console.log('DB error');
+        throw err;
+        return false;
+    }
+    else{
+      console.log("Succesfully connect to DB")
+    }
+    
 });
 
-module.exports = pool;
+module.exports = db;

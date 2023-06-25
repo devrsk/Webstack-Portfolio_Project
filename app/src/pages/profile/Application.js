@@ -110,7 +110,7 @@ function Application(){
     return(
         <Profile>
             <Profile.Text>
-                    Application
+                    Offer Received
                 </Profile.Text>
             <ApplicationForm>
             

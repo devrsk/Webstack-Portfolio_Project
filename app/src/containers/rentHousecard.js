@@ -6,9 +6,9 @@ import { RentContext } from '../context/rentContext';
 
 function RentHousecards({props}){
     const {rentHouses,search,rentFavorite,addRentFavorite,removeRentFavorite} = useContext(RentContext);
-    
     function singlecard(obj,rentFavorite){
         const type = "R"
+        // eslint-disable-next-line react/jsx-pascal-case
         const icon = rentFavorite?<Housecard.RentFavorite removeRentFavorite ={removeRentFavorite} house = {obj} type={type}/>:<Housecard.notRentFavorite addRentFavorite={addRentFavorite} house = {obj}/>
             
         return (

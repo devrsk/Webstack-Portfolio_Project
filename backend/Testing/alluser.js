@@ -1,91 +1,114 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-class allUserRouter {
-  allUser(db, req, res) {
-    db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data) => {
-      if (err) {
-        console.log(err);
-        res.json({
-          success: false,
-          msg: ''
-        });
-        return;
-      }
-      res.json({
-        success: true,
-        dataset: data.rows
-      });
-      return;
-    });
-  }
+class allUserRouter{
 
-  updateUser(db, req, res) {
-    let userID = req.body.id;
+         allUser(db, req, res) {
+            // let username = req.body.username;
+            // let password = req.body.password;
+            // const bearerHeader = req.headers['authorization'];
+            // const bearer = bearerHeader.split(' ');
+            // const bearerToken = bearer[1];
+            // // var decoded = jwt.verify(bearerToken, 'propertyprokey');
+            // console.log("headertoken");
+            // console.log(req.headers['authorization']);
 
-    let cols = ['Y', userID];
-    db.query('UPDATE ACCOUNT SET approved = $1 WHERE ID = $2', cols, (err) => {
-      if (err) {
-        console.log(err);
-        res.json({
-          success: false,
-          msg: ''
-        });
-        return;
-      }
+            // let cols = [username];
+            db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data, fields) => {
 
-      db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data) => {
-        if (err) {
-          console.log(err);
-          res.json({
-            success: false,
-            msg: ''
-          });
-          return;
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    })
+                    return;
+                }
+                //console.log(data);
+                res.json({
+                    success: true,
+                    dataset: data
+                });
+                return;
+            });
+
         }
-        console.log(data);
-        res.json({
-          success: true,
-          dataset: data.rows
-        });
-        return;
-      });
-    });
-  }
 
-  removeUser(db, req, res) {
-    let userID = req.body.id;
 
-    let cols = [userID];
-    // since cascaded, if the user is a realtor, it will be automatically deleted
-    db.query('DELETE FROM ACCOUNT WHERE ID = $1', cols, (err) => {
-      if (err) {
-        console.log(err);
-        res.json({
-          success: false,
-          msg: ''
-        });
-        return;
-      }
+        updateUser(db, req, res) {
+            // let username = req.body.username;
+             let userID = req.body.id;
 
-      db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data) => {
-        if (err) {
-          console.log(err);
-          res.json({
-            success: false,
-            msg: ''
-          });
-          return;
+             let cols = ['Y', userID];
+            db.query('UPDATE ACCOUNT SET approved = ? where ID = ?', cols, (err) => {
+
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    })
+                    return;
+                }
+            
+                db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data, fields) => {
+                    if(err) {
+                        console.log(err);
+                        res.json({
+                            success: false,
+                            msg: ''
+                        })
+                        return;
+                    }
+                    console.log(data);
+                    res.json({
+                        success: true,
+                        dataset: data
+                    });
+                    return;
+                });
+            });
+
         }
-        console.log(data);
-        res.json({
-          success: true,
-          dataset: data.rows
-        });
-        return;
-      });
-    });
-  }
+
+        removeUser(db, req, res) {
+            // let username = req.body.username;
+             let userID = req.body.id;
+
+             let cols = [userID];
+             //since cascaded, if the user is a realtor, it will be automatically deleted
+            db.query('DELETE FROM ACCOUNT where ID = ?', cols, (err) => {
+
+                if(err) {
+                    console.log(err);
+                    res.json({
+                        success: false,
+                        msg: ''
+                    })
+                    return;
+                }
+            
+                db.query('SELECT ID, username, Email, a_type, approved FROM ACCOUNT', (err, data, fields) => {
+                    if(err) {
+                        console.log(err);
+                        res.json({
+                            success: false,
+                            msg: ''
+                        })
+                        return;
+                    }
+                    console.log(data);
+                    res.json({
+                        success: true,
+                        dataset: data
+                    });
+                    return;
+                });
+            });
+
+        }
+        
+        
+   
 }
-
 module.exports = allUserRouter;

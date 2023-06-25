@@ -6,7 +6,7 @@ function Search(){
     return(
         <SearchForm>
             <SearchForm.Title>
-                Home has never been more important
+            Simplify. Search. Manage.
             </SearchForm.Title>
         </SearchForm>
       

@@ -58,7 +58,7 @@ Housecard.RentFavorite = function HousecardFavorite({house,type,children, remove
         </Favorite>
     )
 }
-Housecard.notFavorite = function HousecardnotFavorite({house,children,addFavorite,...restProps}){
+Housecard.NotFavorite = function HousecardnotFavorite({house,children,addFavorite,...restProps}){
     return(
         <Favorite {...restProps} onClick = {()=>addFavorite(house) }>
             <i className="far fa-heart"></i>

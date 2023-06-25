@@ -5,12 +5,11 @@ import ItemAdd from "../components/itemAdd"
 import axios from 'axios';
 import Footer from "../containers/footer"
 import {DB} from '../constants/DB'
-// import ListingPic from '../img/homeicon.png'
+
 import { RealtorContext } from '../context/realtorContext';
  
 function SellByOwner() {
-    const {realtors} = useContext(RealtorContext)
-
+    const { realtors } = useContext(RealtorContext);
     const [realtorID, setRealtorID] = useState('');
     const [error] = useState('');
     const [propertyType, setPropertyType] = useState("Single House");
@@ -52,13 +51,14 @@ function SellByOwner() {
 
     const isInvalid = price === '' || mainPictures === '' || otherPictures === '' || propertyType === '' || streetAddress === '' || city === '' || states === '' || zipCode === '' || bed === '' || bath === '' || area === '' || year === '' || description === '' || parking === '' || floor === '' || living === '';
 
-    async function handleSubmit(){
-        const formData = new FormData();
-        formData.append('list_type', "sell");
-        formData.append('main', mainPictures);
-        data.image.slice(1).forEach(file=>{
-            formData.append('others', file);
-        });
+    async function handleSubmit(event){
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append('list_type', "sell");
+        formData.append('main', mainPictures);
+        otherPictures.forEach(file => {
+          formData.append('others', file);
+          });
 
         formData.append('owner', user.id);
         formData.append('Realtor_ID', realtorID);
@@ -80,7 +80,7 @@ function SellByOwner() {
         formData.append('status', 'A');
 
         console.log("owner", formData.get('owner'));
-        console.log("realtor", formData.get('realtor'));
+        console.log("Realtor_ID", formData.get('Realtor_ID'));
         console.log("p_type", formData.get('p_type'));
         console.log("street", formData.get('street'));
         console.log("city", formData.get('city'));
@@ -107,6 +107,31 @@ function SellByOwner() {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
+        }).then(() => {
+          // Reset the form fields to their initial values
+          setRealtorID('');
+          setPropertyType('Single House');
+          setStreetAddress('');
+          setAptNum('');
+          setCity('');
+          setStates('');
+          setZipCode('');
+          setBed('');
+          setBath('');
+          setArea('');
+          setLiving('');
+          setFloor('Carpet');
+          setParking(1);
+          setPrice('');
+          setYear('');
+          setMainPictures([]);
+          setOtherPictures([]);
+          setDescription('');
+          setData(null);
+          setInfo(false);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     }
 
@@ -117,13 +142,16 @@ function SellByOwner() {
 
     let agents = [];
     // //get unique types
-    if(realtors){
-        agents = getUnique(realtors, 'Fname');
+    if (realtors) {
+        agents = getUnique(realtors, 'U_ID'); // Retrieve unique U_ID values
         agents = ['Realtor', ...agents];
         agents = agents.map((item, index) => {
-            return <Form.Option value={index} key={index}>{item}</Form.Option>
+          // Find the corresponding Realtor object based on U_ID
+          const realtor = realtors.find((realtor) => realtor.U_ID === item);
+          const displayName = realtor ? `${realtor.Fname} ${realtor.Lname}` : item;
+          return <Form.Option value={item} key={index}>{displayName}</Form.Option>; // Assign the display name and U_ID
         });
-    }
+}
 
     if(info){
         return (
@@ -147,13 +175,13 @@ function SellByOwner() {
                                 >Apartment</Form.Option>
                         </Form.Select>
                         <Form.Select onChange={({ target }) => setRealtorID(target.value)}>
-                            {agents}
+                         {agents}
                         </Form.Select>
                         <Form.Input
                             placeholder="Street Address"
                             value={streetAddress}
                             onChange={({ target }) => setStreetAddress(target.value)}
-                            pattern="^[A-Za-z-0-99999999"
+                            pattern="^[A-Za-z0-9-]*$"
                         />
                         <Row style={{margin: "auto"}}>
                             <Form.Input
@@ -276,5 +304,4 @@ function SellByOwner() {
     }
 }
 
-export default SellByOwner
-
+export default SellByOwner;

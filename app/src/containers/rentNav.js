@@ -6,7 +6,7 @@ function rentNavbar(){
         <ProfileNav>
               <ProfileNav.TextLink to ={ROUTES.RENT_POST}>Post Listing</ProfileNav.TextLink>
               <ProfileNav.TextLink to ={ROUTES.RENT_LISTING}>Listing</ProfileNav.TextLink>
-              <ProfileNav.TextLink to ={ROUTES.RENT_APPLICATION}>Application</ProfileNav.TextLink>
+              <ProfileNav.TextLink to ={ROUTES.RENT_APPLICATION}>Offer Page</ProfileNav.TextLink>
         </ProfileNav>
     )
 }

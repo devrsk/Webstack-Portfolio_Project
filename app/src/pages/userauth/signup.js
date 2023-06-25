@@ -67,7 +67,7 @@ function Signup() {
     firstName === '' || lastName === '' || zipcode === '' || phone === '' || username === '' || password === '' || emailAddress === '';
 
     const conditionalRealtor = realtor ? 
-    <>
+    <React.Fragment>
         <Form.Input
             placeholder="First Name"
             value={firstName}
@@ -91,9 +91,9 @@ function Signup() {
             onChange={({ target }) => setPhone(target.value)}
             pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
         />
-    </> : null;
+    </React.Fragment> : null;
     return (
-        <>
+        <React.Fragment>
            <Form>
                 <Form.Title>Sign Up</Form.Title>
                 {error && <Form.Error>{error}</Form.Error>}
@@ -141,7 +141,7 @@ function Signup() {
                 </Form.Base>
             </Form>
             <Footer/>
-        </>
+        </React.Fragment>
     )
 }
 

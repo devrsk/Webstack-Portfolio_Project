@@ -1,6 +1,7 @@
 import React,{useState,useContext} from 'react';
 import { RentContext } from '../context/rentContext';
-import { BuyLayout } from '../components/export';
+import { Badge} from 'react-bootstrap';
+//import { BuyLayout } from '../components/export';
 
 //get all unique values
 const getUnique = (items, value) => {
@@ -26,7 +27,6 @@ export default function RentFilterBar(props) {
         parking,
         year,
         rentHouses,
-        find_result
     } = context;
     let types = [];
     let beds = [];
@@ -70,19 +70,17 @@ export default function RentFilterBar(props) {
         years = years.map((item, index) => {
             return <option value={item} key={index}>{item}</option>
         });
-
-        // availables = ["in one month", "in three months", "in six months"]
-        // availables = ['all', ...availables];
-        // availables = availables.map((item, index) => {
-        //     return <option value={item} key={index}>{item}+</option>
-        // });
     }
 
     
 
     return (
         <section className="filter-container">
-            <BuyLayout.Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} find_result = {find_result} placeholder="Search the houses that you want"/>
+            <div style={{ marginBottom: '2rem' }}>
+          <h1 style={{ textAlign: 'center' }}>
+          <Badge variant="secondary">Rent Filter</Badge>  
+          </h1>
+        </div>
             <form className="filter-form">
                 {/*select type */}
                 <div className="form-group">
@@ -170,17 +168,6 @@ export default function RentFilterBar(props) {
                         onChange={handleChange}
                     >{floorings}</select>
                 </div>
-                {/* <div className="form-group">
-                    <label htmlFor="available">Available Date</label>
-                    <select 
-                        name="available"
-                        id="available"
-                        value={available}
-                        className="form-control"
-                        onChange={handleChange}
-                    >{availables}</select>
-                </div> */}
-
                 <div className="form-group">
                     <label htmlFor="size">
                         house size
@@ -198,7 +185,7 @@ export default function RentFilterBar(props) {
                     </div>
                 </div>
             </form>
-            <button className="filter-button"  onClick={()=>handleSave(props.search_type)}>Save Search</button>
+            <button className="filter-button"  onClick={()=>handleSave(props.search_type)}>Reset Filters</button>
         </section>
     )
 }

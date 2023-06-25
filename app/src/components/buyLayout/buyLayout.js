@@ -69,7 +69,7 @@ Buy.Search = function BuySearch ({ searchTerm, setSearchTerm,find_result, placeh
 
 Buy.ButtonSection = function BuyButton({ children, ...restProps }){
     return (
-        <>
+        <React.Fragment>
         <ButtonSection>
             <Button>For Sell</Button>
             <Button>Price</Button>
@@ -77,7 +77,7 @@ Buy.ButtonSection = function BuyButton({ children, ...restProps }){
             <Button>Houses</Button>
             <Button style={{backgroundColor: "blue", color:"white"}}>Save Search</Button>
         </ButtonSection>
-        </>
+        </React.Fragment>
     )
 }
 export default Buy

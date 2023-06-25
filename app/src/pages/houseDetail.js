@@ -198,7 +198,7 @@ function HouseDetail(props){
                                 {conditionalDate}
                             </Houseinfo.FeatureBase>
                         </Houseinfo.FeatureContainer>
-                        <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Application</Houseinfo.Button>
+                        <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Make An Offer</Houseinfo.Button>
                     </Houseinfo.Base>
                 </Houseinfo>
             <Application display = {display} >
@@ -234,4 +234,4 @@ function HouseDetail(props){
     )}
 }
 
-export default HouseDetail
+export default HouseDetail;

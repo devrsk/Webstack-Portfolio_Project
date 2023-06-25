@@ -25,7 +25,7 @@ function FooterContainer() {
                 <Footer.Column>
                     <Footer.Link href="#">Account</Footer.Link>
                     <Footer.Link href="#">Reedem gift cards</Footer.Link>
-                    <Footer.Link href="#">Privacy</Footer.Link>
+                    <Footer.Link href="#">Priacy</Footer.Link>
                     <Footer.Link href="#">Speed Test</Footer.Link>
                 </Footer.Column>
                 
@@ -37,14 +37,14 @@ function FooterContainer() {
                 </Footer.Column>
 
                 <Footer.Column>
-                    <Footer.Link href="mailto:devrsk@tuta.io" ><i className="far fa-envelope"></i></Footer.Link>
+                    <Footer.Link href="mailto:raheem.salifu@gmail.com" ><i className="far fa-envelope"></i></Footer.Link>
                     <Footer.Link href="https://facebook.com"><i className="fab fa-facebook"></i></Footer.Link>
                     <Footer.Link href="https://twitter.com" ><i className="fab fa-twitter"></i></Footer.Link>
                     <Footer.Link href="https://github.com"  ><i className="fab fa-github"></i></Footer.Link>
                 </Footer.Column>
             </Footer.Row>
             <Footer.Break />
-            <Footer.Text>Copyrighted by Property Pro </Footer.Text>
+            <Footer.Text>PropertyPro </Footer.Text>
         </Footer>
     )
 }

@@ -31,30 +31,30 @@ function RentHousecards({props}){
     if(realtors && !search){
         const  cards = realtors.map(realtor=>singlecard(realtor));
         return(
-            <>
+            <React.Fragment>
             <Realtorcard>
                 {cards}
             </Realtorcard>
-            </>
+            </React.Fragment>
         )
     }else if(realtors && search){
         if(search.length === 0){
             return(
-                <>
+                <React.Fragment>
                 
                 <Realtorcard>
                     no result
                 </Realtorcard>
-                </>
+                </React.Fragment>
             )
         }else if(search.length !== 0){
         const  cards = search.map(realtor=>singlecard(realtor));
             return(
-                <>
+                <React.Fragment>
                 <Realtorcard>
                     {cards}
                 </Realtorcard>
-                </>
+                </React.Fragment>
             )
         }
     }else{

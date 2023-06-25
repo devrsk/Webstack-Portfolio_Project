@@ -1,6 +1,7 @@
 const multer = require("multer");
 const db = require('../Testing/db');
-var fs = require('fs');
+const fs = require('fs');
+const path = require('path');
 
 const imageFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
@@ -10,14 +11,14 @@ const imageFilter = (req, file, cb) => {
   }
 };
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     let f_path = '';
     let sql = '';
     console.log("req.body.list_type", req.body.list_type);
     console.log("req.body.owner", req.body.owner);
     console.log("req.body", req.body);
-    if (req.body.list_type == 'sell') {
+    if (req.body.list_type === 'sell') {
       f_path = 'public/forSale/';
       sql = 'SELECT MAX(S_ID) AS ID FROM FOR_SALE';
     } else {
@@ -33,17 +34,13 @@ var storage = multer.diskStorage({
         return;
       }
 
-      if (data[0].id === null) {
-        pic_path = f_path + '1/';
-        f_num = 1;
-        !fs.existsSync(pic_path) && fs.mkdirSync(pic_path);
-        cb(null, pic_path);
-      } else {
-        pic_path = f_path + (data[0].id + 1) + '/';
-        f_num = data[0].id + 1;
-        !fs.existsSync(pic_path) && fs.mkdirSync(pic_path);
-        cb(null, pic_path);
-      }
+      const baseDir = path.join(__dirname, '..');
+      const fullPath = path.join(baseDir, f_path);
+      const subDir = data[0].ID === null ? '1' : (data[0].ID + 1).toString();
+      const pic_path = path.join(fullPath, subDir);
+
+      fs.mkdirSync(pic_path, { recursive: true });
+      cb(null, pic_path);
     });
   },
 
@@ -56,5 +53,5 @@ var storage = multer.diskStorage({
   }
 });
 
-var uploadFile = multer({ storage: storage, fileFilter: imageFilter });
+const uploadFile = multer({ storage: storage, fileFilter: imageFilter });
 module.exports = uploadFile;

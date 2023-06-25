@@ -5,7 +5,7 @@ export const Background = styled.section`
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    height: calc(100vh - 90px);
+    height: calc(100vh - 300px);
     background-color: #464646;
     padding: 10rem 0 ;
     outline: none;
@@ -52,9 +52,10 @@ export const SearchInput = styled.input`
     
 `
 export const Title = styled.h1`
-    color: black;
-    font-size: 3rem;
+    color: white;
+    font-size: 6rem;
     text-align: center;
+    margin-top: 4rem;
     margin-bottom: 4rem;
     @media (max-width: 600px){
         font-size: 2rem;

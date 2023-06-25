@@ -6,9 +6,9 @@ import BuyContainer from '../containers/buyContainer'
 
 
         return (
-            <>
+            <React.Fragment>
             <BuyContainer/>
-            </>  
+            </React.Fragment>  
         )
 
 }

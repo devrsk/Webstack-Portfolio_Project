@@ -5,13 +5,13 @@ import Search from '../containers/search'
 
 function Home(){
     return(
-        <>
+        <React.Fragment>
             <Search/> 
      
                <Gridcard/>
     
             <Footer/> 
-        </>
+        </React.Fragment>
     )
 }
 

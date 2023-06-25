@@ -103,6 +103,13 @@ function RentHouseDetail(props){
             }
     }
 
+    const cancelFormDisplay = () => {
+        // Code to handle closing the form
+        // For example, you can update a state variable to hide the form
+        setDisplay(false);
+      };
+
+     
     const Applicaiton_URL = `${DB}/rentRequest`
     async function handleApplication (event){
         
@@ -244,10 +251,10 @@ function RentHouseDetail(props){
                         </Houseinfo.FeatureContainer>
                         <Row style={{margin: "auto"}}>
                             <Col>
-                                <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Application</Houseinfo.Button>
+                                <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Show Interest</Houseinfo.Button>
                             </Col>
                             <Col>
-                            <   Houseinfo.Button to={'#'} toggleDisplay={toggleVisitDisplay}>Visit</Houseinfo.Button>
+                            <   Houseinfo.Button to={'#'} toggleDisplay={toggleVisitDisplay}>Schedule Visit</Houseinfo.Button>
                             </Col>
                         </Row>
                     </Houseinfo.Base>
@@ -258,7 +265,6 @@ function RentHouseDetail(props){
             </Application>
 
             <Application.Base display = {display}>
-                <Application.Close toggleDisplay={toggleDisplay}><i className="far fa-window-close"></i></Application.Close>
                 <Application.Title>Application Form</Application.Title>
                 <Application.InputArea onSubmit={handleApplication} method="POST" Scroll ="hidden">
                     <Application.Input  
@@ -283,6 +289,7 @@ function RentHouseDetail(props){
                     </Application.Input>
 
                     <Application.Submit disabled={isInvalid} onclick={toggleDisplay}>Submit</Application.Submit>
+                    <Application.Submit  disabled={VisitIsInvalid} onclick={cancelFormDisplay}>Cancel</Application.Submit>
                 </Application.InputArea>
             </Application.Base> 
 
@@ -292,7 +299,6 @@ function RentHouseDetail(props){
             </Application>
 
             <Application.Base display = {visitDisplay}>
-                <Application.Close toggleDisplay={toggleVisitDisplay}><i className="far fa-window-close"></i></Application.Close>
                 <Application.Title>Schedule Visit Form</Application.Title>
                         <Application.InputArea onSubmit={handleVisit} method="POST" Scroll = "scroll">
                         
@@ -312,6 +318,8 @@ function RentHouseDetail(props){
                                     onChange={({ target }) => setEndDate(target.value)}/> 
                            </Application.InputField>
                            <Application.Submit  disabled={VisitIsInvalid} onclick={toggleVisitDisplay}>Submit</Application.Submit>
+                           &nbsp;&nbsp;
+                           <Application.Submit  disabled={VisitIsInvalid} onclick={cancelFormDisplay}>Cancel</Application.Submit>
                             
                         </Application.InputArea>
                       

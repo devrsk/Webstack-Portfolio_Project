@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to cmpe202" });
+  res.json({ message: "Welcome to PropertyPro" });
 });
 
 app.post("/login", function(req, res) {
@@ -299,7 +299,6 @@ app.get('/api/realtor/zip', async function (req, res) {
   }
 })
 
-// 获取当前用户的所有搜索记录
 app.get('/api/favorite/mine', async function (req, res) {
   try {
     const fav = new favorite();

@@ -1,33 +1,45 @@
-const nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
+//const Mailgen = require("mailgen");
 
-class SendEmail {
-  async sendEmail(req, res) {
-    console.log("Sending email");
-    console.log(req.email);
-    const transporter = nodemailer.createTransport({
-      service: 'yahoo',
-      host: 'smtp.mail.yahoo.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: 'test@yahoo.com',
-        pass: '123456'
-      }
-    });
+class sendEmail{
+  
+  
+  
+    sendEmail(req, res){
 
-    const message = {
-      from: 'test@yahoo.com',
-      to: req.email,
-      subject: req.title,
-      text: req.emailContent,
+      console.log("Sending email");
+      console.log(req.email);
+      let transporter = nodemailer.createTransport({
+        service: 'yahoo',
+        host: 'smtp.mail.yahoo.com',
+        port: 465,
+        secure: false,
+        auth: {
+          user: 'lyn12345yin@yahoo.com',
+          pass: 'obkshrugxrapkoza'
+        }
+      });
+    
+      let message = {
+        from: 'lyn12345yin@yahoo.com',
+        to: req.email,
+        subject: req.title,
+        text: req.emailContent,
+      };
+    
+      transporter
+        .sendMail(message)
+        // .then(() => {
+        //   res.json({
+        //       success: true,
+        //       msg: ''
+        //       });
+        // })
+        .catch((error) => console.error(error));
     };
+  
 
-    try {
-      await transporter.sendMail(message);
-    } catch (error) {
-      console.error(error);
-    }
-  }
 }
 
-module.exports = SendEmail;
+
+module.exports = sendEmail;

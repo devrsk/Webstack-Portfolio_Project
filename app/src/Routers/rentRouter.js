@@ -7,14 +7,14 @@ import Application from '../pages/rentals/Application'
 import Lisitng from '../pages/rentals/Listing'
 function RentRouters(){
     return(
-        <>
+        <React.Fragment>
         <RentNav/>
         <Switch>
             <Route path = {ROUTES.RENT_POST}><RentByOwner/></Route>
             <Route path = {ROUTES.RENT_LISTING}><Lisitng/></Route>
             <Route path = {ROUTES.RENT_APPLICATION}><Application/></Route>
         </Switch>
-        </>
+        </React.Fragment>
     )
 }
 

@@ -165,4 +165,4 @@ function RealtorDetail(props){
     )}
 }
 
-export default RealtorDetail
+export default RealtorDetail;

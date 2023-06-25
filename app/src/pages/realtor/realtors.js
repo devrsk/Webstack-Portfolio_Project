@@ -5,9 +5,9 @@ function Realtor () {
 
 
         return (
-            <>
+            <React.Fragment>
             <RealtorContainer/>
-            </>  
+            </React.Fragment>  
         )
 
 }

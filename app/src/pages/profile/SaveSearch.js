@@ -43,22 +43,22 @@ function SaveSearch() {
             return singlecard(listitem)
           })
         return(
-            <>
+            <React.Fragment>
              <Profile>
                 <Profile.Text>Saved Search</Profile.Text>
                 <Profile.CardsContainer>
                     {cards}
                 </Profile.CardsContainer>
             </Profile>
-            </>
+            </React.Fragment>
         )
     }else{
         return(
-            <>
+            <React.Fragment>
              <Profile>
                 <Profile.Text>Oops you don't have any saved search yet</Profile.Text>
             </Profile>
-            </>
+            </React.Fragment>
         )
     }
 

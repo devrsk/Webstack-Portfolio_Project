@@ -27,13 +27,13 @@ Run the following commands in your frontend terminal:
 To start the project, you need two terminals for the frontend and backend.
 
 ## Frontend:
-- Change to the app folder in the terminal: '''cd app'''
-- Start the React project: '''npm start'''
+- Change to the app folder in the terminal: `cd app`
+- Start the React project: `npm start`
 - *The frontend will be accessible on port 3000.*
 
 ## Backend:
-- Change to the backend folder in the terminal: '''cd backend'''
-- Start the backend server: '''npm start'''
+- Change to the app folder in the terminal: `cd backend`
+- Start the React project: `npm start`
 - *The backend will be accessible on port 9000.*
 
 
@@ -63,18 +63,18 @@ The goal of this project is to develop a web application that allows users to bu
         Remove listings.
 - Buy: (Buyer or Realtor)
         Submit an application with an offer for a home.
-        Send an email to the seller/seller's realtor.
+        Send an email to the seller/seller's realtor to register interest.
 - Rent Out: (Realtor or Landlord)
         Add new listings.
         Upload details of homes.
         Update lease terms, availability date, security deposit.
         Schedule visits.
-        Review renters' applications and approve/reject.
+        See renters' applications.
         Update listing details.
         Remove listings.
 - Rent: (Renter)
         Submit an application for a lease, including credit score and employment information.
-        Send an email to the landlord/landlord's realtor.
+        Send an email to the landlord/landlord's realtor to register interest.
 
 ## Features
 

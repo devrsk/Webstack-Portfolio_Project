@@ -286,7 +286,7 @@ app.get('/api/realtor/name', async function (req, res) {
   }
 })
 
-// search realtor list by name
+// search realtor list by zipcode
 app.get('/api/realtor/zip', async function (req, res) {
   try {
     const s = new realtor();

@@ -188,36 +188,39 @@ function Listing() {
             }
 
     }
-    function ListingCard(obj){
-        // console.log("obj",obj.visit[0].start_time)
-        return (
-        
-            <ListingForm.Base key = {obj.R_ID}>
-                <ListingForm.Link to = {`${ROUTES.RENT}/${obj.R_ID}` }>
-                    <ListingForm.ImageContainer>
-                        <ListingForm.Img src = {obj.main_dir?obj.main_dir:DefaultImg} alt ="#"/>
-                    </ListingForm.ImageContainer>
-                </ListingForm.Link>
-                <ListingForm.TextContainer>
-                        <ListingForm.Title>city : {obj.city}</ListingForm.Title>
-                        <ListingForm.Text>street : {obj.street}</ListingForm.Text>
-                        <ListingForm.Text>Rate : {obj.rate ? obj.rate.toLocaleString("en-US", {style: "currency", currency: "USD"}):null}</ListingForm.Text>
-                        <ListingForm.Text>Visit : {obj.visit ? obj.visit[0].start_time.substring(0,10):null}</ListingForm.Text>
-                    </ListingForm.TextContainer>
-                <ListingForm.Button to={'#'} func={toggleDisplay} id={obj.R_ID}>Update</ListingForm.Button>
-                <ListingForm.Button to={ROUTES.LISTING} func={handleDelete} id={obj.R_ID}>Remove</ListingForm.Button>
-            </ListingForm.Base>  
 
-   
-        )
-    }
+    function ListingCard({ obj, keyProp }) {
+        //console.log("My key is this " + obj.S_ID);
+        return (
+          <ListingForm.Base key={keyProp}>
+            <ListingForm.Link to={`${ROUTES.RENT}/${keyProp}`}>
+              <ListingForm.ImageContainer>
+                <ListingForm.Img src={obj.main_dir ? obj.main_dir : DefaultImg} alt="#" />
+              </ListingForm.ImageContainer>
+            </ListingForm.Link>
+            <ListingForm.TextContainer>
+              <ListingForm.Title>
+                {obj.price ? obj.price.toLocaleString("en-US", { style: "currency", currency: "USD" }) : null}
+              </ListingForm.Title>
+              <ListingForm.Text>{obj.city + " " + obj.state}</ListingForm.Text>
+              <ListingForm.Text>Rate : {obj.rate ? obj.rate.toLocaleString("en-US", {style: "currency", currency: "USD"}):null}</ListingForm.Text>
+              <ListingForm.Text>Visit : {obj.visit ? obj.visit[0].start_time.substring(0,10):null}</ListingForm.Text>
+            </ListingForm.TextContainer>
+            <ListingForm.Button to={"#"} func={toggleDisplay} id={obj.R_ID}>
+              Update
+            </ListingForm.Button>
+            <ListingForm.Button to={ROUTES.LISTING} func={handleDelete} id={obj.S_ID}>
+              Remove
+            </ListingForm.Button>
+          </ListingForm.Base>
+        );
+      }
 
     const getUnique = (items, value) => {
         return [...new Set(items.map(item => item[value]))];
     };
 
     let agents = [];
-    // //get unique types
     if(realtors){
         agents = getUnique(realtors, 'Fname');
         agents = ['Realtor', ...agents];
@@ -226,18 +229,23 @@ function Listing() {
         });
     }
 
-    if(Listing&&Listing.length){
-        const  cards = Listing.map(item=>ListingCard(item));
-        // console.log(isInvalid)
-        return(
-            <Profile>
-                <Profile.Text>
-                    Listing
-                </Profile.Text>
+    if (Listing && Listing.length) {
+        const uniqueListing = Array.from(new Set(Listing.map(item => item.R_ID))).map(rId => {
+          return Listing.find(item => item.R_ID === rId);
+        });
+      
+        const cards = uniqueListing.map((item, index) => (
+          <ListingCard obj={item} key={`${item.R_ID}-${index}`} />
+        ));
+      
+        return (
+          <Profile>
+            <Profile.Text>
+              Rent Listings
+            </Profile.Text>
             <ListingForm>
-                {cards}
-                </ListingForm>
-            
+              {cards}
+            </ListingForm>
             <Application display = {display} >
             </Application>
             <Application.Base display = {display}>
@@ -463,23 +471,20 @@ function Listing() {
                     <Application.Submit disabled={isInvalid} onclick={toggleDisplay}>Submit</Application.Submit>
                 </Application.InputArea>
         </Application.Base>     
-        
-        
         <Application display = {openDisplay} >
-        </Application>
-    </Profile>
-        )
-    }else{
-        return(
-            <Profile>
-                <Profile.Text>
-                    Oops you have not list any house yet!
-                </Profile.Text>
-            </Profile> 
-        // <Loading/>
-        )
-    }
-   
+        </Application>    
+          </Profile>
+        );
+      } else {
+        return (
+          <Profile>
+            <Profile.Text>
+              Oops you have not listed any house yet!
+            </Profile.Text>
+          </Profile>
+          // <Loading/>
+        );
+      }
 }
 
-export default Listing
+export default Listing;

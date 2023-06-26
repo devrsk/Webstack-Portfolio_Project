@@ -228,41 +228,53 @@ function Listing() {
             fetch(Search_URL).then(response=>response.json()).then(result=>setHouses(result.dataset))
 
     }
-    function ListingCard(obj){
-        return (
-        
-            <ListingForm.Base key = {obj.S_ID}>
-                <ListingForm.Link to = {`${ROUTES.BUY}/${obj.S_ID}` }>
-                    <ListingForm.ImageContainer>
-                        <ListingForm.Img src = {obj.main_dir?obj.main_dir:DefaultImg} alt ="#"/>
-                    </ListingForm.ImageContainer>
-                </ListingForm.Link>
-                <ListingForm.TextContainer>
-                <ListingForm.Title>{obj.price ? obj.price.toLocaleString("en-US", {style: "currency", currency: "USD"}):null}</ListingForm.Title>
-                <ListingForm.Text>{obj.city+" "+obj.state}</ListingForm.Text>
-                        <ListingForm.Text>{obj.street}</ListingForm.Text>
-                        
-                    </ListingForm.TextContainer>
-                <ListingForm.Button to={'#'} func={toggleOpenhouse} id={obj.S_ID}>Open House</ListingForm.Button>
-                <ListingForm.Button to={'#'} func={toggleDisplay} id={obj.S_ID}>Update</ListingForm.Button>
-                <ListingForm.Button to={ROUTES.LISTING} func={handleDelete} id={obj.S_ID}>Remove</ListingForm.Button>
-            </ListingForm.Base>  
 
-   
-        )
-    }
-    if(Listing&&Listing.length){
-        const  cards = Listing.map(item=>ListingCard(item));
-        // console.log(isInvalid)
-        return(
-            <Profile>
-                <Profile.Text>
-                    Listing
-                </Profile.Text>
+    function ListingCard({ obj, keyProp }) {
+        //console.log("My key is this " +obj.S_ID);
+        return (
+          <ListingForm.Base key={keyProp}>
+            <ListingForm.Link to={`${ROUTES.BUY}/${keyProp}`}>
+              <ListingForm.ImageContainer>
+                <ListingForm.Img src={obj.main_dir ? obj.main_dir : DefaultImg} alt="#" />
+              </ListingForm.ImageContainer>
+            </ListingForm.Link>
+            <ListingForm.TextContainer>
+              <ListingForm.Title>
+                {obj.price ? obj.price.toLocaleString("en-US", { style: "currency", currency: "USD" }) : null}
+              </ListingForm.Title>
+              <ListingForm.Text>{obj.city + " " + obj.state}</ListingForm.Text>
+              <ListingForm.Text>{obj.street}</ListingForm.Text>
+            </ListingForm.TextContainer>
+            <ListingForm.Button to={"#"} func={toggleOpenhouse} id={obj.S_ID}>
+              Open House
+            </ListingForm.Button>
+            <ListingForm.Button to={"#"} func={toggleDisplay} id={obj.S_ID}>
+              Update
+            </ListingForm.Button>
+            <ListingForm.Button to={ROUTES.LISTING} func={handleDelete} id={obj.S_ID}>
+              Remove
+            </ListingForm.Button>
+          </ListingForm.Base>
+        );
+      }
+
+      if (Listing && Listing.length) {
+        const uniqueListing = Array.from(new Set(Listing.map(item => item.S_ID))).map(sId => {
+          return Listing.find(item => item.S_ID === sId);
+        });
+      
+        const cards = uniqueListing.map((item, index) => (
+          <ListingCard obj={item} key={`${item.S_ID}-${index}`} />
+        ));
+      
+        return (
+          <Profile>
+            <Profile.Text>
+              House Listings
+            </Profile.Text>
             <ListingForm>
-                {cards}
-                </ListingForm>
-            
+              {cards}
+            </ListingForm>
             <Application display = {display} >
             </Application>
             <Application.Base display = {display}>
@@ -469,19 +481,18 @@ function Listing() {
                         </Application.InputArea>
                       
                 </Application.Base>     
-                </Profile>
-        )
-    }else{
-        return(
-            <Profile>
-                <Profile.Text>
-                    Oops you have not list any house yet!
-                </Profile.Text>
-            </Profile> 
-        // <Loading/>
-        )
-    }
-   
+          </Profile>
+        );
+      } else {
+        return (
+          <Profile>
+            <Profile.Text>
+              Oops you have not listed any house yet!
+            </Profile.Text>
+          </Profile>
+          // <Loading/>
+        );
+      }
 }
 
-export default Listing
+export default Listing;

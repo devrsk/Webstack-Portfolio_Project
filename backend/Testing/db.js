@@ -2,25 +2,24 @@ const mysql = require('mysql');
 
 //Database
 const db = mysql.createConnection({
-    host: 'RSKs-MacBook-Pro.local',
+    host: 'localhost',
     user: 'root',
-    password: '123456',
-    // password: 'password',
-    database: 'PROPERTYPRO',
-    // insecureAuth : true
+    password: 'password',
+    database: 'DBName',
+
 });
 
 
-db.connect(function(err) {
-    if(err){
+db.connect(function (err) {
+    if (err) {
         console.log('DB error');
         throw err;
         return false;
     }
-    else{
-      console.log("Succesfully connect to DB")
+    else {
+        console.log("Succesfully connect to DB")
     }
-    
+
 });
 
 module.exports = db;

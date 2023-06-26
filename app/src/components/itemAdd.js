@@ -41,11 +41,14 @@ export default class ItemAdd extends React.Component {
       let file = e.target.files[0];
 
       reader.onloadend = () => {
+      const imageUrl = reader.result; // Get the generated URL
+      console.log('Generated URL:', imageUrl); // Log the URL to the console
         this.setState((prevState) => ({
           image: [...prevState.image, file],
-          imagePreviewUrl: [...prevState.imagePreviewUrl, reader.result],
+          imagePreviewUrl: [...prevState.imagePreviewUrl, imageUrl],
           current,
         }));
+        
       };
 
       reader.readAsDataURL(file);

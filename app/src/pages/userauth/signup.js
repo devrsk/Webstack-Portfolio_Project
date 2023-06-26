@@ -82,7 +82,7 @@ function Signup() {
             placeholder="Zip Code :123456"
             value={zipcode}
             onChange={({ target }) => setZipCode(target.value)}
-            pattern="[0-9]{5}"
+            pattern="^[A-Za-z0-9-]*$"
         />
         <Form.Input
             type="tel"

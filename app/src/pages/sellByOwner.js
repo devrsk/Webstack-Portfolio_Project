@@ -181,7 +181,7 @@ function SellByOwner() {
                             placeholder="Street Address"
                             value={streetAddress}
                             onChange={({ target }) => setStreetAddress(target.value)}
-                            pattern="^[A-Za-z0-9-]*$"
+                            ppattern="^[A-Za-z0-9 -]*$"
                         />
                         <Row style={{margin: "auto"}}>
                             <Form.Input
@@ -205,7 +205,7 @@ function SellByOwner() {
                                 value={zipCode}
                                 onChange={({ target }) => setZipCode(target.value)}
                                 style={{width: "150px", marginRight: "5px"}}
-                                pattern="[0-9]{5}"
+                                pattern="^[A-Za-z0-9-]*$"
                             />
                             <Form.Input
                                 placeholder="State"
@@ -251,7 +251,7 @@ function SellByOwner() {
                                 value={area}
                                 onChange={({ target }) => setArea(target.value)}
                                 style={{width: "100px", marginLeft: "2.5px"}}
-                                pattern="^[0-9]*$"
+                                pattern="^[A-Za-z0-9 -]*$"
                             />
                         </Row>
                         <Row style={{margin: "auto"}}>

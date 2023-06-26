@@ -1,9 +1,8 @@
-const db = require('../Testing/db');
+const db = require('./db');
 
 const uploadFiles = async (req, res) => {
   try {
-    console.log('Request Body:', req.body);
-    let f_num;
+
     sql = '';
    
 
@@ -15,6 +14,7 @@ const uploadFiles = async (req, res) => {
       file_path = 'http://localhost:9000/forRent_pic/';
       sql = 'SELECT MAX(R_ID) AS ID FROM FOR_RENT';
     }
+
      
       picture_path = file_path + f_num;
 

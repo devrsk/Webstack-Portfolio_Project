@@ -10,7 +10,7 @@ import ProfileNavbar from '../containers/profileNav'
 
 function ProfileRouters(){
     return(
-        <React.Fragment>
+        <>
         <ProfileNavbar/>
         <Switch>
               <Route path = {ROUTES.SAVED_HOME}><SaveHome/></Route>
@@ -19,7 +19,7 @@ function ProfileRouters(){
               <Route path = {ROUTES.APPLICATION}><Application/></Route>
               <Route path = {ROUTES.LISTING}><Listing/></Route>
         </Switch>
-        </React.Fragment>
+        </>
     )
 }
 

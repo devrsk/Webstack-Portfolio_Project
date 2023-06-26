@@ -2,10 +2,12 @@ const mysql = require('mysql');
 
 //Database
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: 'RSKs-MacBook-Pro.local',
     user: 'root',
-    password: 'password',
-    database: 'db name',
+    password: '123456',
+    // password: 'password',
+    database: 'PROPERTYPRO',
+    // insecureAuth : true
 });
 
 

@@ -177,7 +177,7 @@ if (realtors) {
                     placeholder="Street Address"
                     value={streetAddress}
                     onChange={({ target }) => setStreetAddress(target.value)}
-                    pattern="^[A-Za-z0-9-]*$"
+                    pattern="^[A-Za-z0-9 -]*$"
                 />
                 <Row style={{margin: "auto"}}>
                     <Form.Input
@@ -201,7 +201,7 @@ if (realtors) {
                         value={zipCode}
                         onChange={({ target }) => setZipCode(target.value)}
                         style={{width: "150px", marginRight: "5px"}}
-                        pattern="[0-9]{5}"
+                        pattern="^[A-Za-z0-9 -]*$"
                     />
                     <Form.Input
                         placeholder="State"

@@ -1,14 +1,17 @@
 import React from 'react';
-import { 
-    Container, 
-    Error, 
-    Base, 
-    Title, 
-    Text, 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+
+import {
+    Container,
+    Error,
+    Base,
+    Title,
+    Text,
     TextSmall,
     Link,
     Input,
-    TextArea, 
+    TextArea,
     Submit,
     Select,
     Option
@@ -54,7 +57,7 @@ Form.Submit = function FormSubmit({ children, ...restProps }) {
     return <Submit {...restProps}>{children}</Submit>
 }
 
-Form.Select =function FormSelect({ children, ...restProps }) {
+Form.Select = function FormSelect({ children, ...restProps }) {
     return <Select {...restProps}>{children}</Select>
 }
 

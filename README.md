@@ -7,20 +7,12 @@ This is the README file for the PropertyPro web application, which is the final 
 ### Backend Dependencies
 
 Run the following commands in your backend terminal:
-- npm i bcrypt
-- npm i body-parser
-- npm i jsonwebtoken
-- npm i nodemon
-- npm i multer --save
-- npm i nodemailer --save
+- npm i 
 
 ### rontend Dependencies
 
 Run the following commands in your frontend terminal:
-- npm install react-icons --save
-- npm i google-maps-react
-- npm install react-bootstrap bootstrap
-- npm i contentful
+- npm i 
 
 ## Project Setup
 

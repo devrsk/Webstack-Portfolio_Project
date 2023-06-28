@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Badge} from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 import { Context } from '../context/housesContext';
 //import { BuyLayout } from '../components/export';
 
@@ -14,6 +14,7 @@ export default function FilterBar(props) {
     handleSave,
     type,
     bed,
+    bath,
     minPrice,
     maxPrice,
     flooring,
@@ -24,7 +25,7 @@ export default function FilterBar(props) {
     houses,
   } = context;
 
-  
+
   let types = [];
   let beds = [];
   let baths = [];
@@ -71,10 +72,10 @@ export default function FilterBar(props) {
   return (
     <section className="filter-container">
       <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ textAlign: 'center' }}>
-          <Badge variant="secondary">House Filter</Badge>  
-          </h1>
-        </div>
+        <h1 style={{ textAlign: 'center' }}>
+          <Badge variant="secondary">House Filter</Badge>
+        </h1>
+      </div>
       <form className="filter-form">
         <div className="form-group">
           <label htmlFor="type">House type</label>
@@ -105,7 +106,7 @@ export default function FilterBar(props) {
           <select
             name="bath"
             id="bath"
-            value={bed}
+            value={bath}
             className="form-control"
             onChange={handleChange}>
             {baths}

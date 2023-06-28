@@ -1,6 +1,6 @@
-import React,{useState,useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { RentContext } from '../context/rentContext';
-import { Badge} from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 //import { BuyLayout } from '../components/export';
 
 //get all unique values
@@ -34,29 +34,29 @@ export default function RentFilterBar(props) {
     let rates = [];
     let floorings = [];
     let years = [];
-    // //get unique types
-    if(rentHouses){
+
+    if (rentHouses) {
         types = getUnique(rentHouses, 'property_type');
         types = ['all', ...types];
         types = types.map((item, index) => {
             return <option value={item} key={index}>{item}</option>
         });
-        
-        beds = [1,2,3,4,5]
+
+        beds = [1, 2, 3, 4, 5]
         beds = ['any', ...beds];
         beds = beds.map((item, index) => {
             return <option value={item} key={index}>{item}+</option>
         });
 
-        baths = [1,2,3,4,5]
+        baths = [1, 2, 3, 4, 5]
         baths = ['any', ...baths];
         baths = baths.map((item, index) => {
             return <option value={item} key={index}>{item}+</option>
         });
 
-        rates = [1000,2000,2500,3000,3500,4000,5000]
+        rates = [1000, 2000, 2500, 3000, 3500, 4000, 5000]
         rates = rates.map((item, index) => {
-            return <option value={item} key={index+1}>{item}</option>
+            return <option value={item} key={index + 1}>{item}</option>
         });
 
         floorings = getUnique(rentHouses, "flooring");
@@ -65,22 +65,22 @@ export default function RentFilterBar(props) {
             return <option value={item} key={index}>{item}</option>
         });
 
-        years = [1990,1995,2000,2005,2010,2015,2020]
+        years = [1990, 1995, 2000, 2005, 2010, 2015, 2020]
         years = ['all', ...years];
         years = years.map((item, index) => {
             return <option value={item} key={index}>{item}</option>
         });
     }
 
-    
+
 
     return (
         <section className="filter-container">
             <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ textAlign: 'center' }}>
-          <Badge variant="secondary">Rent Filter</Badge>  
-          </h1>
-        </div>
+                <h1 style={{ textAlign: 'center' }}>
+                    <Badge variant="secondary">Rent Filter</Badge>
+                </h1>
+            </div>
             <form className="filter-form">
                 {/*select type */}
                 <div className="form-group">
@@ -94,7 +94,7 @@ export default function RentFilterBar(props) {
                         {types}
                     </select>
                 </div>
-                
+
                 {/*bed*/}
                 <div className="form-group">
                     <label htmlFor="bed">Bed</label>
@@ -160,7 +160,7 @@ export default function RentFilterBar(props) {
                 </div>
                 <div className="form-group">
                     <label htmlFor="flooring">Flooring</label>
-                    <select 
+                    <select
                         name="flooring"
                         id="flooring"
                         value={flooring}
@@ -185,7 +185,7 @@ export default function RentFilterBar(props) {
                     </div>
                 </div>
             </form>
-            <button className="filter-button"  onClick={()=>handleSave(props.search_type)}>Reset Filters</button>
+            <button className="filter-button" onClick={() => handleSave(props.search_type)}>Reset Filters</button>
         </section>
     )
 }

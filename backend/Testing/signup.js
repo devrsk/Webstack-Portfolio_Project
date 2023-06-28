@@ -78,7 +78,7 @@ class signupRouter {
                 await this.execSQL(db, sql); //                           s
             }
             db.commit();//                                            commit transaction
-            res.json({ success: true, msg: 'register success' })
+            res.json({ success: true, msg: 'Thank you for signing up. Your application is pending the approval of the administrator. In the meantime, you can continue looking at some houses. Happy Browsing' })
         } catch (ex) {
             db.rollback();//                                          rollback transaction
             console.log('sql rollback')
@@ -88,3 +88,4 @@ class signupRouter {
     }
 }
 module.exports = signupRouter;
+

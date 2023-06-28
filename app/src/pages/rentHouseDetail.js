@@ -6,6 +6,8 @@ import { RentContext } from '../context/rentContext';
 import { Houseinfo } from '../components/export'
 import { Application } from '../components/export';
 import LoadingContainer from '../containers/LoadingContainer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { Row, Col } from 'react-bootstrap'
 import { DB } from '../constants/DB'
 
@@ -102,13 +104,6 @@ function RentHouseDetail(props) {
 
         }
     }
-
-    const cancelFormDisplay = () => {
-        // Code to handle closing the form
-        // For example, you can update a state variable to hide the form
-        setDisplay(false);
-    };
-
 
     const Applicaiton_URL = `${DB}/rentRequest`
     async function handleApplication(event) {
@@ -239,7 +234,7 @@ function RentHouseDetail(props) {
                             <Houseinfo.FeatureBase>
                                 <Houseinfo.FeatureIcon>
                                     <i className="fas fa-dollar-sign"></i>
-                                </Houseinfo.FeatureIcon> Deposite
+                                </Houseinfo.FeatureIcon> Deposit
                                 <Houseinfo.FeatureText>
                                     {house.security_deposit ? house.security_deposit.toLocaleString("en-US", { style: "currency", currency: "USD" }) : null}                                </Houseinfo.FeatureText>
                             </Houseinfo.FeatureBase>
@@ -251,10 +246,10 @@ function RentHouseDetail(props) {
                         </Houseinfo.FeatureContainer>
                         <Row style={{ margin: "auto" }}>
                             <Col>
-                                <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Show Interest</Houseinfo.Button>
+                                <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Interested</Houseinfo.Button>
                             </Col>
                             <Col>
-                                <   Houseinfo.Button to={'#'} toggleDisplay={toggleVisitDisplay}>Schedule Visit</Houseinfo.Button>
+                                <   Houseinfo.Button to={'#'} toggleDisplay={toggleVisitDisplay}>Visit</Houseinfo.Button>
                             </Col>
                         </Row>
                     </Houseinfo.Base>
@@ -265,9 +260,7 @@ function RentHouseDetail(props) {
                 </Application>
 
                 <Application.Base display={display}>
-                    <Application.Close toggleDisplay={toggleDisplay}>
-                        <i className="far fa-window-close"></i>
-                    </Application.Close>
+                    <Application.Close toggleDisplay={toggleDisplay} ><FontAwesomeIcon icon={faWindowClose} className="start" color="black" /></Application.Close>
                     <Application.Title>Application Form</Application.Title>
                     <Application.InputArea onSubmit={handleApplication} method="POST" Scroll="hidden">
                         <Application.Input
@@ -301,9 +294,7 @@ function RentHouseDetail(props) {
                 </Application>
 
                 <Application.Base display={visitDisplay}>
-                    <Application.Close toggleDisplay={toggleVisitDisplay}>
-                        <i className="far fa-window-close"></i>
-                    </Application.Close>
+                    <Application.Close toggleDisplay={toggleVisitDisplay} ><FontAwesomeIcon icon={faWindowClose} className="start" color="black" /></Application.Close>
                     <Application.Title>Schedule Visit Form</Application.Title>
                     <Application.InputArea onSubmit={handleVisit} method="POST" Scroll="scroll">
 
@@ -339,4 +330,4 @@ function RentHouseDetail(props) {
     }
 }
 
-export default RentHouseDetail
+export default RentHouseDetail;

@@ -32,12 +32,18 @@ function RentProvider({ children }) {
       .then((result) => {
         setRentHouses(result.dataset);
         setSearch(result.dataset);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
       });
 
     if (user) {
       fetch(`${DB}/api/favorite/mine?id=${user.id}`)
         .then((response) => response.json())
-        .then((result) => setFavorite_search_list(result.list));
+        .then((result) => setFavorite_search_list(result.list))
+        .catch((error) => {
+          console.error('Error fetching favorite search list:', error);
+        });
 
       try {
         fetch(`${DB}/api/favorite/home?id=${user.id}`)
@@ -46,12 +52,16 @@ function RentProvider({ children }) {
             console.log(result);
             let Favorite_List = result.list;
             setRentFavorite(Favorite_List);
+          })
+          .catch((error) => {
+            console.error('Error fetching rent favorites:', error);
           });
       } catch (e) {
         console.log(e);
       }
     }
   }, []);
+
 
   useEffect(() => {
     filterData();
@@ -145,13 +155,10 @@ function RentProvider({ children }) {
   async function handleSave(search_type) {
     console.log(user);
     if (user) {
-      const SaveSearch_URL = `${DB}/api/search?search_type=${search_type}&uid=${user.id}&min_price=${minRate}&max_price=${maxRate}&bedroom=${
-        bed === '0' ? null : bed
-      }&bathroom=${bath === '0' ? null : bath}&year_built=${
-        year === 'all' ? null : year
-      }&parking=${parking}&home_type=${types}&flooring=${
-        flooring === 'all' ? null : flooring
-      }&house_size=${minSize}`;
+      const SaveSearch_URL = `${DB}/api/search?search_type=${search_type}&uid=${user.id}&min_price=${minRate}&max_price=${maxRate}&bedroom=${bed === '0' ? null : bed
+        }&bathroom=${bath === '0' ? null : bath}&year_built=${year === 'all' ? null : year
+        }&parking=${parking}&home_type=${types}&flooring=${flooring === 'all' ? null : flooring
+        }&house_size=${minSize}`;
       try {
         console.log('save search');
 
@@ -181,7 +188,7 @@ function RentProvider({ children }) {
           body: JSON.stringify({
             U_ID: user.id,
             home_type: 'r',
-            properity_id: type === 'S' ? house.S_ID : house.R_ID,
+            properity_id: type === 'S' ? house.R_ID : house.R_ID,
           }),
         });
         let result = await res.json();
@@ -251,16 +258,16 @@ function RentProvider({ children }) {
 
   const contextValue = {
     rentHouses,
-          handleChange,
-          handleSave,
-          search,
-          favorite_search_list,
-          setSearch,
-          rentFavorite,
-          removeRentFavorite,
-          addRentFavorite,
-          minSize,
-          maxSize,
+    handleChange,
+    handleSave,
+    search,
+    favorite_search_list,
+    setSearch,
+    rentFavorite,
+    removeRentFavorite,
+    addRentFavorite,
+    minSize,
+    maxSize,
   };
 
   return <RentContext.Provider value={contextValue}>{children}</RentContext.Provider>;

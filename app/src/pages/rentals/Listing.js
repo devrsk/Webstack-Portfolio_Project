@@ -197,7 +197,7 @@ function Listing() {
         //console.log("My key is this " + keyProp);
         return (
             <ListingForm.Base key={keyProp}>
-                <ListingForm.Link to={`${ROUTES.RENT}/${keyProp}`}>
+                <ListingForm.Link to={`${ROUTES.RENT}/${obj.R_ID}`}>
                     <ListingForm.ImageContainer>
                         <ListingForm.Img src={obj.main_dir ? obj.main_dir : DefaultImg} alt="#" />
                     </ListingForm.ImageContainer>
@@ -217,7 +217,6 @@ function Listing() {
                     Remove
                 </ListingForm.Button>
             </ListingForm.Base>
-
         );
     }
 

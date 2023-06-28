@@ -6,8 +6,9 @@ import { Context } from '../context/housesContext';
 import { Houseinfo } from '../components/export'
 import { Application } from '../components/export';
 import LoadingContainer from '../containers/LoadingContainer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
 import { DB } from '../constants/DB'
-
 
 function HouseDetail(props) {
     const { houses } = useContext(Context);
@@ -54,6 +55,7 @@ function HouseDetail(props) {
         else
             setDisplay("none")
     }
+
     const house_imge = check ? house.pic_dir.map(image => (
         <Houseinfo.img key={Math.random()} src={image} />
     )) : "null";
@@ -63,10 +65,7 @@ function HouseDetail(props) {
 
         event.preventDefault();
         if (user) {
-            // console.log(user.id)
-            // console.log(house.S_ID)
-            // console.log(name)
-            // console.log(Application_price)
+
             try {
                 let res = await fetch(Applicaiton_URL, {
                     method: 'post',
@@ -147,6 +146,7 @@ function HouseDetail(props) {
                                     {house.year_built ? house.year_built : "No Data"}
                                 </Houseinfo.FeatureText>
                             </Houseinfo.FeatureBase>
+
                             <Houseinfo.FeatureBase>
                                 <Houseinfo.FeatureIcon>
                                     <i className="fas fa-parking"></i>
@@ -156,6 +156,7 @@ function HouseDetail(props) {
                                     {house.parking === 1 ? "Open" : "Close"} Parking
                                 </Houseinfo.FeatureText>
                             </Houseinfo.FeatureBase>
+
                             <Houseinfo.FeatureBase>
                                 <Houseinfo.FeatureIcon>
                                     <i className="fas fa-grip-lines"></i>
@@ -181,29 +182,29 @@ function HouseDetail(props) {
                                 {conditionalDate}
                             </Houseinfo.FeatureBase>
                         </Houseinfo.FeatureContainer>
-                        <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Make An Offer</Houseinfo.Button>
+                        <Houseinfo.Button to={'#'} toggleDisplay={toggleDisplay}>Apply Now</Houseinfo.Button>
                     </Houseinfo.Base>
                 </Houseinfo>
+                <Application display={display} >
+
+
+                </Application>
                 <Application.Base display={display}>
-                    <Application.Close toggleDisplay={toggleDisplay}>
-                        <i className="far fa-window-close"></i>
-                    </Application.Close>
+                    <Application.Close toggleDisplay={toggleDisplay} ><FontAwesomeIcon icon={faWindowClose} className="start" color="black" /></Application.Close>
                     <Application.Title>Application Form</Application.Title>
                     <Application.InputArea onSubmit={handleApplication} method="POST" Scroll="hidden">
                         <Application.Input
                             placeholder="Name"
                             value={name}
-                            onChange={({ target }) => setName(target.value)}
-                        ></Application.Input>
+                            onChange={({ target }) => setName(target.value)}>
+                        </Application.Input>
                         <Application.Input
                             placeholder="Price"
                             value={Application_price}
-                            onChange={({ target }) => setApplication_price(target.value)}
-                        ></Application.Input>
+                            onChange={({ target }) => setApplication_price(target.value)}>
+                        </Application.Input>
 
-                        <Application.Submit disabled={isInvalid} onclick={toggleDisplay}>
-                            Submit
-                        </Application.Submit>
+                        <Application.Submit disabled={isInvalid} onclick={toggleDisplay}>Submit</Application.Submit>
                     </Application.InputArea>
                 </Application.Base>
             </>

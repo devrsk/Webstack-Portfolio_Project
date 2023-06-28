@@ -235,7 +235,7 @@ function Listing() {
         //console.log("My key is this " +obj.S_ID);
         return (
             <ListingForm.Base key={keyProp}>
-                <ListingForm.Link to={`${ROUTES.BUY}/${keyProp}`}>
+                <ListingForm.Link to={`${ROUTES.BUY}/${obj.S_ID}`}>
                     <ListingForm.ImageContainer>
                         <ListingForm.Img src={obj.main_dir ? obj.main_dir : DefaultImg} alt="#" />
                     </ListingForm.ImageContainer>

@@ -188,7 +188,7 @@ function RentProvider({ children }) {
           body: JSON.stringify({
             U_ID: user.id,
             home_type: 'r',
-            properity_id: type === 'S' ? house.R_ID : house.R_ID,
+            properity_id: type === 'r' ? house.R_ID : house.R_ID,
           }),
         });
         let result = await res.json();

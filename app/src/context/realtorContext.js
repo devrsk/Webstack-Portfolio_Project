@@ -36,7 +36,7 @@ function RealtorProvider({ children }) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <RealtorContext.Provider
         value={{
           realtors,
@@ -47,7 +47,7 @@ function RealtorProvider({ children }) {
       >
         {children}
       </RealtorContext.Provider>
-    </React.Fragment>
+    </>
   );
 }
 

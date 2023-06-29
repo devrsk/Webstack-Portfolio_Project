@@ -33,13 +33,26 @@ function SellByOwner() {
     const [info, setInfo] = useState(false);
 
     const user = JSON.parse(localStorage.getItem('authUser'));
+    const Upload_URL = `${DB}/upload`
 
-    const createItem = async (newItem) => {
-        console.log("click")
-        setMainPictures(newItem.image[0])
+    useEffect(() => {
+        if (data) {
+            console.log("i am here");
+        }
+        console.log("effect main", mainPictures);
+        console.log("effect other", otherPictures);
+        // setPictures(formData);
+    }, [data]);
+
+    const createItem = (newItem) => {
+        console.log(error);
+        console.log(newItem);
+        console.log('PHOTO:', newItem.image);
+        setMainPictures(newItem.image[0]);
+        setOtherPictures(newItem.image.slice(1)); // Store all pictures except the first one
         setData(newItem);
         setInfo(true);
-    }
+    };
 
     useEffect(() => {
         if (data) {
@@ -47,7 +60,7 @@ function SellByOwner() {
         }
     }, [data, realtorID])
 
-    const Upload_URL = `${DB}/upload`
+
 
     const isInvalid = price === '' || mainPictures === '' || otherPictures === '' || propertyType === '' || streetAddress === '' || city === '' || states === '' || zipCode === '' || bed === '' || bath === '' || area === '' || year === '' || description === '' || parking === '' || floor === '' || living === '';
 
